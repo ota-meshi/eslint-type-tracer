@@ -1,0 +1,98 @@
+{
+  "name": "eslint-type-tracer",
+  "version": "0.0.0",
+  "description": "The type tracer for ESLint rules.",
+  "main": "lib/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": "^18 || >=20"
+  },
+  "scripts": {
+    "build": "pnpm run build:tsdown",
+    "build:tsdown": "tsdown",
+    "lint": "eslint .",
+    "tsc": "tsc",
+    "eslint-fix": "eslint . --fix",
+    "test": "pnpm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000",
+    "cover": "nyc --reporter=lcov pnpm run test",
+    "ts": "node -r esbuild-register",
+    "mocha": "pnpm run ts ./node_modules/mocha/bin/mocha.js",
+    "changeset:version": "changeset version && git add --all",
+    "prechangeset:publish": "pnpm run build",
+    "changeset:publish": "changeset publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ota-meshi/eslint-type-tracer.git"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "math",
+    "number",
+    "lint"
+  ],
+  "author": "Yosuke Ota",
+  "funding": "https://github.com/sponsors/ota-meshi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ota-meshi/eslint-type-tracer/issues"
+  },
+  "homepage": "https://ota-meshi.github.io/eslint-type-tracer/",
+  "dependencies": {
+    "@eslint-community/eslint-utils": "^4.7.0"
+  },
+  "peerDependencies": {
+    "eslint": ">=8"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.4",
+    "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
+    "@ota-meshi/eslint-plugin": "^0.17.6",
+    "@types/eslint-scope": "^8.0.0",
+    "@types/estree": "^1.0.7",
+    "@types/json-schema": "^7.0.15",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.18",
+    "@types/semver": "^7.7.0",
+    "@typescript-eslint/parser": "^8.32.1",
+    "@typescript-eslint/types": "^8.32.1",
+    "assert": "^2.1.0",
+    "esbuild": "^0.25.5",
+    "esbuild-register": "^3.6.0",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-eslint-plugin": "^6.4.0",
+    "eslint-plugin-jsdoc": "^51.0.0",
+    "eslint-plugin-json-schema-validator": "^5.4.0",
+    "eslint-plugin-jsonc": "^2.20.0",
+    "eslint-plugin-markdown": "^5.1.0",
+    "eslint-plugin-n": "^17.18.0",
+    "eslint-plugin-node-dependencies": "^1.0.0",
+    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-plugin-regexp": "^2.7.0",
+    "eslint-plugin-yml": "^1.18.0",
+    "mocha": "^11.3.0",
+    "nyc": "^17.1.0",
+    "prettier": "^3.5.3",
+    "semver": "^7.7.2",
+    "tsdown": "^0.12.7",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.32.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

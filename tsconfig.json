@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "ESNext",
+    "lib": ["DOM", "ESNext"],
+    "declaration": true,
+    "strict": true,
+    "noImplicitAny": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["typings/*"]
+    },
+    "esModuleInterop": true,
+    "allowArbitraryExtensions": true,
+    "moduleResolution": "bundler",
+    "outDir": "lib",
+    "noEmit": true,
+    "isolatedDeclarations": true,
+
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*",
+    "tests/src/**/*",
+    "tests/utils/**/*",
+    "tools/**/*",
+    "docs/.vitepress/**/*",
+    "typings/**/*",
+    "tsdown.config.ts"
+  ],
+  "exclude": [
+    "tests/fixtures/**/*",
+    "lib/**/*",
+    "docs/.vitepress/cache/**/*",
+    "docs/.vitepress/dist/**/*"
+  ]
+}
