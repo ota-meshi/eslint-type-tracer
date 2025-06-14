@@ -40,27 +40,13 @@ export default [
       "n/no-missing-import": "off",
     },
   },
-  {
-    files: ["docs/.vitepress/**"].flatMap((pattern) => [
-      `${pattern}/*.js`,
-      `${pattern}/*.mjs`,
-      `${pattern}/*.ts`,
-      `${pattern}/*.mts`,
-      `${pattern}/*.vue`,
-    ]),
+  ...tseslint.config({
+    files: ["**/*.md/*.ts", "*.md/*.ts"],
+    extends: [tseslint.configs.disableTypeChecked],
     rules: {
-      "jsdoc/require-jsdoc": "off",
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-
-      // なぜ有効になっているか不明。要調査
-      "vue/no-v-model-argument": "off",
+      "@typescript-eslint/no-unused-vars": "off",
     },
-    languageOptions: {
-      globals: {
-        window: "readonly",
-      },
-    },
-  },
+  }),
   ...tseslint.config({
     files: ["tests/fixtures/**/*.{js,ts}"],
     extends: [tseslint.configs.disableTypeChecked],
