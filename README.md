@@ -15,6 +15,10 @@
 
 Trace and infer types of expression nodes for ESLint rules.
 
+## 🚧 Limitations
+
+This tool cannot always infer the complete or exact type of an expression. In particular, ESLint analyzes one file at a time, so types that are defined or imported from other files cannot be inferred. As a result, type inference is limited to what can be determined within the current file only.
+
 ## 💿 Installation
 
 ```bash
