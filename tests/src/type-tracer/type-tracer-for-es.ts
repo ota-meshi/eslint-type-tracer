@@ -492,7 +492,7 @@ describe("type-tracer-for-es", () => {
 });
 
 function getResultOfBuildExpressionTypeProvider(code: string) {
-  const linter = new Linter();
+  const linter = new Linter({ configType: "flat" });
 
   const result: (TypeName | null)[] = [];
   const linterResult = linter.verify(code, {
@@ -517,6 +517,7 @@ function getResultOfBuildExpressionTypeProvider(code: string) {
       sourceType: "module",
       globals: {
         Float16Array: "readonly",
+        Intl: "readonly",
       },
     },
     rules: { "test/test-rule": "warn" },
