@@ -43,7 +43,7 @@ Builds a type checker function for use in ESLint rules. This function helps you 
 ```ts
 function buildTypeChecker(
   sourceCode: SourceCode,
-  options?: { aggressiveResult?: false | "aggressive" }
+  options?: { aggressive?: boolean }
 ): (
   node: TSESTree.Expression,
   className: TypeName,
@@ -52,7 +52,7 @@ function buildTypeChecker(
 ```
 
 - `sourceCode`: The ESLint `SourceCode` object.
-- `options.aggressiveResult`: If set to `"aggressive"`, returns this value when the type cannot be determined. Default is `false`.
+- `options.aggressive`: If set to `true`, returns `"aggressive"` when the type cannot be determined. Default is `false`.
 
 **Returns:**
 

@@ -4,7 +4,7 @@ import { buildTypeCheckerForTS } from "./type-checker-for-ts";
 import { buildTypeTracerForES } from "./type-tracer-for-es";
 
 export type TypeCheckerOptions = {
-  aggressiveResult?: false | "aggressive";
+  aggressive?: boolean;
 };
 
 /**
@@ -17,7 +17,7 @@ export function buildTypeChecker(
   sourceCode: SourceCode,
   options?: TypeCheckerOptions,
 ): TypeChecker {
-  const aggressiveResult = options?.aggressiveResult ?? false;
+  const aggressiveResult = options?.aggressive ? "aggressive" : false;
   return (
     buildTypeCheckerForTS(sourceCode, aggressiveResult) ||
     buildTypeCheckerForES(sourceCode, aggressiveResult)
