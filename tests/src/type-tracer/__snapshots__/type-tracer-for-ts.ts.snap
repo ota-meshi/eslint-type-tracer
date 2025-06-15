@@ -8,12 +8,13 @@ target([], a);
 
 function fn<X extends any[]>(
   a: readonly number[],
-  b: readonly number[],
+  b: ReadonlyArray<number>,
   c: X,
+  d: [string],
 ): void {
-  target(a, b, c);
+  target(a, b, c, d);
 
-  target(a[0], b[0], c[0]);
+  target(a[0], b[0], c[0], d[0]);
 }
  1`] = `
 Array [
@@ -29,8 +30,11 @@ Array [
     ],
   },
   Object {
-    "expr": "target(a, b, c)",
+    "expr": "target(a, b, c, d)",
     "types": Array [
+      Array [
+        "Array",
+      ],
       Array [
         "Array",
       ],
@@ -43,7 +47,7 @@ Array [
     ],
   },
   Object {
-    "expr": "target(a[0], b[0], c[0])",
+    "expr": "target(a[0], b[0], c[0], d[0])",
     "types": Array [
       Array [
         "Number",
@@ -52,6 +56,45 @@ Array [
         "Number",
       ],
       Array [],
+      Array [
+        "String",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS bigint.ts import { target } from "./target";
+
+const a = 1n;
+
+target(a);
+
+function fn<X extends 2n>(a: bigint, b: number, c: X): void {
+  target(a, BigInt(b), c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "BigInt",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, BigInt(b), c)",
+    "types": Array [
+      Array [
+        "BigInt",
+      ],
+      Array [
+        "BigInt",
+      ],
+      Array [
+        "BigInt",
+      ],
     ],
   },
 ]
@@ -196,6 +239,42 @@ Array [
       ],
       Array [
         "String",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS symbol.ts import { target } from "./target";
+
+const a = Symbol.iterator;
+
+target(a);
+
+function fn<X extends symbol>(a: symbol, b: typeof a, c: X): void {
+  target(a, b, c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "Symbol",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      Array [
+        "Symbol",
+      ],
+      Array [
+        "Symbol",
+      ],
+      Array [
+        "Symbol",
       ],
     ],
   },

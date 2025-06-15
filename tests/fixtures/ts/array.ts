@@ -6,10 +6,11 @@ target([], a);
 
 function fn<X extends any[]>(
   a: readonly number[],
-  b: readonly number[],
+  b: ReadonlyArray<number>,
   c: X,
+  d: [string],
 ): void {
-  target(a, b, c);
+  target(a, b, c, d);
 
-  target(a[0], b[0], c[0]);
+  target(a[0], b[0], c[0], d[0]);
 }

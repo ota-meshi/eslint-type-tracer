@@ -77,6 +77,14 @@ export default [
     rules: {
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/prefer-function-type": "off",
+      "@typescript-eslint/array-type": "off",
+      "no-empty-function": "off",
+      "no-var": "off",
+      "no-redeclare": "off",
+      "no-use-before-define": "off",
+      "prefer-template": "off",
+      "no-useless-concat": "off",
+      "n/no-unsupported-features/es-syntax": "off",
     },
   },
   {

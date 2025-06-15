@@ -24,10 +24,10 @@
     "tsc": "tsc",
     "eslint-fix": "eslint . --fix",
     "test": "npm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000",
-    "test:update": "npm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000 --update",
+    "test:update": "npm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000 --update ",
     "cover": "c8 npm run test",
     "ts": "tsx",
-    "mocha": "npm run ts ./node_modules/mocha/bin/mocha.js",
+    "mocha": "npm run ts -- ./node_modules/mocha/bin/mocha.js",
     "changeset:version": "changeset version && git add --all",
     "prechangeset:publish": "npm run build",
     "changeset:publish": "changeset publish"
