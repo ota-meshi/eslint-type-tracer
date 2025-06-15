@@ -1,8 +1,8 @@
-import type { TypeChecker, TypeTracer } from "./utils";
-import { getSimpleExpressionType } from "./utils";
+import type { TypeChecker, TypeTracer } from "./utils.ts";
+import { getSimpleExpressionType } from "./utils.ts";
 import * as module from "module";
 import type * as typescript from "typescript";
-import type { TypeName } from "./types";
+import type { TypeName } from "./types.ts";
 import type { TSESTree } from "@typescript-eslint/types";
 import type { SourceCode } from "eslint";
 

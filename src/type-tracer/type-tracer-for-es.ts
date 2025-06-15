@@ -1,10 +1,10 @@
 import { findVariable, getPropertyName } from "@eslint-community/eslint-utils";
-import { WELLKNOWN_GLOBALS, getPropertyType } from "./es-types";
-import type { TypeChecker, TypeTracer } from "./utils";
-import { getSimpleExpressionType } from "./utils";
+import { WELLKNOWN_GLOBALS, getPropertyType } from "./es-types.ts";
+import type { TypeChecker, TypeTracer } from "./utils.ts";
+import { getSimpleExpressionType } from "./utils.ts";
 import type { AST, SourceCode } from "eslint";
 import type { TSESTree } from "@typescript-eslint/types";
-import type { TypeInfo, TypeName } from "./types";
+import type { TypeInfo, TypeName } from "./types.ts";
 import type { Scope } from "eslint";
 
 /**

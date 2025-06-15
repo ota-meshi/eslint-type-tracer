@@ -1,5 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/types";
-import type { TypeName } from "./types";
+import type { TypeName } from "./types.ts";
 
 export type TypeTracer = (node: TSESTree.Expression) => TypeName[];
 

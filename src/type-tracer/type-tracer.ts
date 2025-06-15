@@ -1,13 +1,13 @@
-import type { TypeChecker, TypeTracer } from "./utils";
+import type { TypeChecker, TypeTracer } from "./utils.ts";
 import type { SourceCode } from "eslint";
 import {
   buildTypeCheckerForTS,
   buildTypeTracerForTS,
-} from "./type-tracer-for-ts";
+} from "./type-tracer-for-ts.ts";
 import {
   buildTypeCheckerForES,
   buildTypeTracerForES,
-} from "./type-tracer-for-es";
+} from "./type-tracer-for-es.ts";
 
 export type TypeCheckerOptions = {
   aggressive?: boolean;

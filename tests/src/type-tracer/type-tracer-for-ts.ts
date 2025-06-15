@@ -1,13 +1,13 @@
 import { deepStrictEqual } from "assert";
-import { buildTypeTracerForTS } from "../../../src/type-tracer/type-tracer-for-ts";
 import { expect } from "@ota-meshi/test-snapshot";
-import type { TypeName } from "../../../src/type-tracer/types";
+import type { TypeName } from "../../../src/type-tracer/types.ts";
 import type { Rule } from "eslint";
 import { Linter } from "eslint";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 import * as tsParser from "@typescript-eslint/parser";
+import { resolvedBuildTypeTracer } from "./resolved-build-type-tracer.ts";
 
 const FIXTURES_ROOT = path.resolve(
   fileURLToPath(import.meta.url),
@@ -40,9 +40,9 @@ describe("type-tracer-for-ts", () => {
   describe("buildTypeTracerForTS", () => {
     for (const { name, code, filename, only } of extractFixtures()) {
       describe(name, () => {
-        (only ? it.only : it)(code, () => {
+        (only ? it.only : it)(code, async () => {
           expect(
-            getResultOfBuildTypeTracerForTS(code, filename),
+            await getResultOfBuildTypeTracerForTS(code, filename),
           ).toMatchSnapshot();
         });
       });
@@ -50,7 +50,9 @@ describe("type-tracer-for-ts", () => {
   });
 });
 
-function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
+async function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
+  const buildTypeTracer = await resolvedBuildTypeTracer();
+
   const linter = new Linter({ configType: "flat" });
 
   const result: {
@@ -66,7 +68,7 @@ function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
           rules: {
             "test-rule": {
               create(context: Rule.RuleContext) {
-                const getType = buildTypeTracerForTS(context.sourceCode);
+                const getType = buildTypeTracer(context.sourceCode);
                 return {
                   "CallExpression[callee.name = target]"(node) {
                     result.push({

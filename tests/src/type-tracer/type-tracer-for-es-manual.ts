@@ -1,13 +1,9 @@
 import { deepStrictEqual } from "assert";
-import { buildTypeTracerForES } from "../../../src/type-tracer/type-tracer-for-es";
-import type { TypeName } from "../../../src/type-tracer/types";
+import type { TypeName } from "../../../src/type-tracer/types.js";
 import type { Rule } from "eslint";
 import { Linter } from "eslint";
 import type { TSESTree } from "@typescript-eslint/types";
-
-// -----------------------------------------------------------------------------
-// Tests
-// -----------------------------------------------------------------------------
+import { resolvedBuildTypeTracer } from "./resolved-build-type-tracer.ts";
 
 describe("type-tracer-for-es", () => {
   describe("buildTypeTracerForES", () => {
@@ -485,14 +481,16 @@ describe("type-tracer-for-es", () => {
         result: ["Number", "Number", "Number"],
       },
     ] as { code: string; result: (TypeName | null)[]; only?: boolean }[]) {
-      (only ? it.only : it)(code, () => {
-        deepStrictEqual(getResultOfBuildTypeTracerForES(code), result);
+      (only ? it.only : it)(code, async () => {
+        deepStrictEqual(await getResultOfBuildTypeTracerForES(code), result);
       });
     }
   });
 });
 
-function getResultOfBuildTypeTracerForES(code: string) {
+async function getResultOfBuildTypeTracerForES(code: string) {
+  const buildTypeTracer = await resolvedBuildTypeTracer();
+
   const linter = new Linter({ configType: "flat" });
 
   const result: (TypeName | null)[] = [];
@@ -502,7 +500,7 @@ function getResultOfBuildTypeTracerForES(code: string) {
         rules: {
           "test-rule": {
             create(context: Rule.RuleContext) {
-              const getType = buildTypeTracerForES(context.sourceCode);
+              const getType = buildTypeTracer(context.sourceCode);
               return {
                 "CallExpression[callee.name = target]"(
                   node: TSESTree.CallExpression,

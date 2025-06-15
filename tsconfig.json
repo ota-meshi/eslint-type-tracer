@@ -18,6 +18,7 @@
     "esModuleInterop": true,
     "allowArbitraryExtensions": true,
     "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "outDir": "lib",
     "noEmit": true,
     "isolatedDeclarations": true,

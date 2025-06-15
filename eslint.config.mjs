@@ -66,6 +66,13 @@ export default [
     },
   }),
   {
+    files: ["tests/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-misused-promises": "off",
+      "require-atomic-updates": "off",
+    },
+  },
+  {
     files: ["tests/fixtures/**/*.*"],
     rules: {
       "@typescript-eslint/no-shadow": "off",
