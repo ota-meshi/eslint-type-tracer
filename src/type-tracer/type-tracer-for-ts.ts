@@ -1,4 +1,4 @@
-import type { TypeChecker } from "./utils";
+import type { TypeChecker, TypeTracer } from "./utils";
 import { getSimpleExpressionType } from "./utils";
 import * as module from "module";
 import type * as typescript from "typescript";
@@ -15,6 +15,41 @@ try {
 }
 
 /**
+ * Build type tracer.
+ * @returns Returns a type tracer.
+ */
+export function buildTypeTracerForTS(
+  sourceCode: SourceCode,
+): TypeTracer | null {
+  const trace = buildTypeTracer<TypeName | null>(sourceCode);
+  if (!trace) return null;
+
+  return function (node) {
+    const type = getSimpleExpressionType(node);
+    if (type) {
+      return type;
+    }
+    return (
+      trace(node, {
+        visitTypeName(typeName) {
+          return typeName as TypeName | null;
+        },
+        visitUnknown() {
+          return null;
+        },
+        visitSymbol(symbol, checker) {
+          const name = checker.getFullyQualifiedName(symbol);
+          if (!name) return null;
+          if (name.startsWith("Readonly")) return name.slice(8) as TypeName;
+          if (name === "CallableFunction") return "Function";
+          if (name === "IteratorObject") return "Iterator";
+          return name as TypeName;
+        },
+      }) || null
+    );
+  };
+}
+/**
  * Build object type checker for TypeScript.
  * @param context The rule context.
  * @param aggressiveResult The value to return if the type cannot be determined.
@@ -24,6 +59,64 @@ export function buildTypeCheckerForTS(
   sourceCode: SourceCode,
   aggressiveResult: false | "aggressive" = false,
 ): TypeChecker | null {
+  const trace = buildTypeTracer<boolean | "aggressive">(sourceCode);
+  if (!trace) return null;
+
+  return function (node, className, memberAccessNode) {
+    const type = getSimpleExpressionType(node);
+    if (type) {
+      return type === className;
+    }
+    return trace(
+      node,
+      {
+        visitTypeName(typeName) {
+          return typeName === className;
+        },
+        visitUnknown() {
+          return aggressiveResult;
+        },
+        visitSymbol(symbol, checker) {
+          if (!className.includes(".")) {
+            const escapedName = symbol.escapedName;
+            return (
+              escapedName === className ||
+              // ReadonlyArray, ReadonlyMap, ReadonlySet
+              escapedName === `Readonly${className}` ||
+              // CallableFunction
+              (className === "Function" &&
+                escapedName === "CallableFunction") ||
+              // IteratorObject
+              (className === "Iterator" && escapedName === "IteratorObject")
+            );
+          }
+          return checker.getFullyQualifiedName(symbol) === className;
+        },
+      },
+      memberAccessNode,
+    );
+  };
+}
+
+interface Context<R> {
+  visitSymbol(
+    symbol: typescript.Symbol,
+    checker: typescript.TypeChecker,
+  ): R | false;
+  visitUnknown(): R;
+  visitTypeName(typeName: string): R;
+}
+
+type Trace<R> = (
+  node: TSESTree.Expression,
+  ctx: Context<R>,
+  memberAccessNode?: TSESTree.MemberExpression | TSESTree.Property,
+) => R | false;
+
+/**
+ *
+ */
+function buildTypeTracer<R>(sourceCode: SourceCode): Trace<R> | null {
   const tsNodeMap: ReadonlyMap<unknown, typescript.Node> =
     sourceCode.parserServices.esTreeNodeToTSNodeMap;
   const checker: typescript.TypeChecker =
@@ -37,28 +130,23 @@ export function buildTypeCheckerForTS(
   const hasFullType =
     sourceCode.parserServices.hasFullTypeInformation !== false;
 
-  return function (node, className, memberAccessNode) {
-    const type = getSimpleExpressionType(node);
-    if (type) {
-      return type === className;
-    }
+  return (node, ctx, memberAccessNode) => {
     return (
-      (memberAccessNode &&
-        checkByPropertyDeclaration(memberAccessNode, className)) ||
-      checkByObjectExpressionType(node, className)
+      (memberAccessNode && checkByPropertyDeclaration(memberAccessNode, ctx)) ||
+      checkByObjectExpressionType(node, ctx)
     );
   };
 
   /**
    * Check if the type of the given node by the declaration of `node.property`.
    * @param memberAccessNode The MemberExpression or Property node.
-   * @param className The class name to disallow.
+   * @param ctx The trace context.
    * @returns `true` if should disallow it.
    */
   function checkByPropertyDeclaration(
     memberAccessNode: TSESTree.MemberExpression | TSESTree.Property,
-    className: TypeName,
-  ) {
+    ctx: Context<R>,
+  ): R | false {
     const tsNode = tsNodeMap.get(
       memberAccessNode.type === "MemberExpression"
         ? memberAccessNode.property
@@ -73,8 +161,9 @@ export function buildTypeCheckerForTS(
           continue;
         }
         const type = checker.getTypeAtLocation(declaration.parent);
-        if (type && typeEquals(type, className)) {
-          return true;
+        const r = type && typeEquals(type, ctx);
+        if (r) {
+          return r;
         }
       }
     }
@@ -85,28 +174,25 @@ export function buildTypeCheckerForTS(
   /**
    * Check if the type of the given node by the type of `node.object`.
    * @param node The Expression node.
-   * @param className The class name to disallow.
+   * @param ctx The trace context.
    * @returns `true` if should disallow it.
    */
   function checkByObjectExpressionType(
     node: TSESTree.Expression,
-    className: TypeName,
-  ) {
+    ctx: Context<R>,
+  ): R | false {
     const tsNode = tsNodeMap.get(node)!;
     const type = checker.getTypeAtLocation(tsNode);
-    return typeEquals(type, className);
+    return typeEquals(type, ctx);
   }
 
   /**
    * Check if the name of the given type is expected or not.
    * @param type The type to check.
-   * @param className The expected type name.
+   * @param ctx The trace context.
    * @returns `true` if should disallow it.
    */
-  function typeEquals(
-    type: typescript.Type,
-    className: TypeName,
-  ): boolean | "aggressive" {
+  function typeEquals(type: typescript.Type, ctx: Context<R>): R | false {
     // console.log(
     //     "typeEquals(%o, %o)",
     //     {
@@ -146,79 +232,73 @@ export function buildTypeCheckerForTS(
     //     className,
     // )
     if (isFunction(type)) {
-      return className === "Function";
+      return ctx.visitTypeName("Function");
     }
     if (isAny(type) || isUnknown(type)) {
-      return aggressiveResult;
+      return ctx.visitUnknown();
     }
     if (isAnonymousObject(type)) {
       // In non full-type mode, array types (e.g. `any[]`) become anonymous object type.
-      return hasFullType ? false : aggressiveResult;
+      return hasFullType ? false : ctx.visitUnknown();
     }
 
     if (isStringLike(type)) {
-      return className === "String";
+      return ctx.visitTypeName("String");
     }
     if (isNumberLike(type)) {
-      return className === "Number";
+      return ctx.visitTypeName("Number");
     }
     if (isBooleanLike(type)) {
-      return className === "Boolean";
+      return ctx.visitTypeName("Boolean");
     }
     if (isBigIntLike(type)) {
-      return className === "BigInt";
+      return ctx.visitTypeName("BigInt");
     }
     if (isSymbolLike(type)) {
-      return className === "Symbol";
+      return ctx.visitTypeName("Symbol");
     }
     if (isArrayLikeObject(type)) {
-      return className === "Array";
+      return ctx.visitTypeName("Array");
     }
 
     if (isReferenceObject(type) && type.target !== type) {
-      return typeEquals(type.target, className);
+      return typeEquals(type.target, ctx);
     }
     if (isTypeParameter(type)) {
       const constraintType = getConstraintType(type);
       if (constraintType) {
-        return typeEquals(constraintType, className);
+        return typeEquals(constraintType, ctx);
       }
-      return hasFullType ? false : aggressiveResult;
+      return hasFullType ? false : ctx.visitUnknown();
     }
     if (isUnionOrIntersection(type)) {
-      return type.types.some((t) => typeEquals(t, className));
+      for (const t of type.types) {
+        const r = typeEquals(t, ctx);
+        if (r) {
+          return r;
+        }
+      }
+      return false;
     }
 
     if (isClassOrInterface(type)) {
-      return typeSymbolEscapedNameEquals(type, className);
+      return typeSymbolEscapedNameEquals(type, ctx);
     }
-    return checker.typeToString(type) === className;
+    return ctx.visitTypeName(checker.typeToString(type));
   }
 
   /**
    * Check if the symbol.escapedName of the given type is expected or not.
    * @param type The type to check.
-   * @param className The expected type name.
+   * @param ctx The trace context.
    * @returns `true` if should disallow it.
    */
   function typeSymbolEscapedNameEquals(
     type: typescript.InterfaceType,
-    className: TypeName,
-  ) {
+    ctx: Context<R>,
+  ): R | false {
     const symbol = type.symbol;
-    if (!className.includes(".")) {
-      const escapedName = symbol.escapedName;
-      return (
-        escapedName === className ||
-        // ReadonlyArray, ReadonlyMap, ReadonlySet
-        escapedName === `Readonly${className}` ||
-        // CallableFunction
-        (className === "Function" && escapedName === "CallableFunction") ||
-        // IteratorObject
-        (className === "Iterator" && escapedName === "IteratorObject")
-      );
-    }
-    return checker.getFullyQualifiedName(symbol) === className;
+    return ctx.visitSymbol(symbol, checker);
   }
 
   /**

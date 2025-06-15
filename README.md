@@ -34,10 +34,42 @@ npm install eslint-type-tracer
 
 ### API
 
+#### buildTypeTracer
+
+```ts
+import { buildTypeTracer } from "eslint-type-tracer";
+```
+
+Builds a type tracer function for use in ESLint rules. This function infers the type name of a given AST expression node.
+
+**Signature:**
+
+```ts
+function buildTypeTracer(
+  sourceCode: SourceCode
+): (node: TSESTree.Expression) => TypeName | null;
+```
+
+- `sourceCode`: The ESLint `SourceCode` object.
+
+**Returns:**
+
+A function that takes an expression node and returns the inferred type name as a string (e.g., `"Array"`, `"String"`, `"Number"`), or `null` if the type cannot be determined.
+
+**Example:**
+
+```ts
+const typeTrace = buildTypeTracer(context.sourceCode);
+const typeName = typeTrace(node);
+if (typeName === "Array") {
+  // node is inferred as Array
+}
+```
+
 #### buildTypeChecker
 
 ```ts
-import { buildTypeChecker, type TypeName } from "eslint-type-tracer";
+import { buildTypeChecker } from "eslint-type-tracer";
 ```
 
 Builds a type checker function for use in ESLint rules. This function helps you determine if a given AST node is of a specific type.

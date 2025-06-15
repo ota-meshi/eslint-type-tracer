@@ -1,6 +1,6 @@
 import { findVariable, getPropertyName } from "@eslint-community/eslint-utils";
 import { WELLKNOWN_GLOBALS, getPropertyType } from "./es-types";
-import type { TypeTracer } from "./utils";
+import type { TypeChecker, TypeTracer } from "./utils";
 import { getSimpleExpressionType } from "./utils";
 import type { AST, SourceCode } from "eslint";
 import type { TSESTree } from "@typescript-eslint/types";
@@ -20,6 +20,23 @@ export function buildTypeTracerForES(sourceCode: SourceCode): TypeTracer {
     }
 
     return getType(node);
+  };
+}
+
+/**
+ * Build type checker for ECMAScript.
+ */
+export function buildTypeCheckerForES(
+  sourceCode: SourceCode,
+  aggressiveResult: false | "aggressive",
+): TypeChecker {
+  const tracer = buildTypeTracerForES(sourceCode);
+  return (node, className): boolean | "aggressive" => {
+    const typeName = tracer(node);
+    if (typeName == null) {
+      return aggressiveResult;
+    }
+    return typeName === className;
   };
 }
 
