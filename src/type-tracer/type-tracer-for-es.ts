@@ -1,4 +1,4 @@
-import { findVariable, getPropertyName } from "@eslint-community/eslint-utils";
+import { findVariable } from "@eslint-community/eslint-utils";
 import { WELLKNOWN_GLOBALS, getPropertyType } from "./es-types.ts";
 import type { TypeChecker, TypeTracer } from "./utils.ts";
 import { getSimpleExpressionType } from "./utils.ts";
@@ -6,6 +6,7 @@ import type { AST, SourceCode } from "eslint";
 import type { TSESTree } from "@typescript-eslint/types";
 import type { TypeInfo, TypeName } from "./types.ts";
 import type { Scope } from "eslint";
+import { getPropertyKeyValue } from "./get-property-key-value.ts";
 
 /**
  * Build type tracer.
@@ -295,7 +296,10 @@ function buildExpressionTypeProviderImpl(
           if (prop.type !== "Property") {
             return (properties = {});
           }
-          const propertyName = getPropertyName(prop, sourceCode.getScope(node));
+          const propertyName = getPropertyKeyValue(
+            prop,
+            sourceCode.getScope(node),
+          );
           if (propertyName == null) {
             continue;
           }
@@ -585,7 +589,7 @@ function buildExpressionTypeProviderImpl(
    * @returns The type info of member expression.
    */
   function getMemberExpressionTypeInfo(node: TSESTree.MemberExpression) {
-    const propertyName = getPropertyName(node, sourceCode.getScope(node));
+    const propertyName = getPropertyKeyValue(node, sourceCode.getScope(node));
     if (propertyName == null) {
       return null;
     }
@@ -622,7 +626,7 @@ function buildExpressionTypeProviderImpl(
         if (prop.type !== "Property") {
           continue;
         }
-        const propertyName = getPropertyName(
+        const propertyName = getPropertyKeyValue(
           prop,
           sourceCode.getScope(pattern),
         );

@@ -198,6 +198,9 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
       fromAsync: { type: "Function", return: { type: "Promise" } },
       isArray: RETURN_BOOLEAN,
       of: { type: "Function", return: { type: "Array" } },
+      get [Symbol.species]() {
+        return WELLKNOWN_GLOBALS.Array;
+      },
     } satisfies Record<ArrayProperty, TypeInfo | undefined>,
   },
   Map: {
@@ -206,13 +209,20 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     prototypeType: "Map",
     properties: {
       groupBy: { type: "Function", return: { type: "Map" } },
+      get [Symbol.species]() {
+        return WELLKNOWN_GLOBALS.Map;
+      },
     } satisfies Record<MapProperty, TypeInfo | undefined>,
   },
   Set: {
     type: "Function",
     return: { type: "Set" },
     prototypeType: "Set",
-    properties: {} satisfies Record<SetProperty, TypeInfo | undefined>,
+    properties: {
+      get [Symbol.species]() {
+        return WELLKNOWN_GLOBALS.Set;
+      },
+    } satisfies Record<SetProperty, TypeInfo | undefined>,
   },
   RegExp: {
     type: "Function",
@@ -240,6 +250,9 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
       lastParen: { type: "String" },
       leftContext: { type: "String" },
       rightContext: { type: "String" },
+      get [Symbol.species]() {
+        return WELLKNOWN_GLOBALS.RegExp;
+      },
     } satisfies Record<RegExpProperty, TypeInfo | undefined>,
   },
   Date: {
@@ -275,6 +288,9 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
           },
         },
       },
+      get [Symbol.species]() {
+        return WELLKNOWN_GLOBALS.Promise;
+      },
     } satisfies Record<PromiseProperty, TypeInfo | undefined>,
   },
   Int8Array: buildGlobalTypedArrayTypeInfo("Int8Array"),
@@ -301,6 +317,9 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     prototypeType: "ArrayBuffer",
     properties: {
       isView: RETURN_BOOLEAN,
+      get [Symbol.species]() {
+        return WELLKNOWN_GLOBALS.ArrayBuffer;
+      },
     } satisfies Record<ArrayBufferProperty, TypeInfo | undefined>,
   },
   SharedArrayBuffer: {
@@ -478,6 +497,7 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
       PI: { type: "Number" },
       SQRT1_2: { type: "Number" },
       SQRT2: { type: "Number" },
+      [Symbol.toStringTag]: { type: "String" },
     } satisfies Record<MathProperty, TypeInfo | undefined>,
   },
   Error: {
@@ -540,6 +560,9 @@ const ARRAY_PROPERTIES: Record<ArrayPrototypeProperty, TypeInfo> = {
   with: { type: "Function", return: { type: "Array" } },
   // Properties
   length: { type: "Number" },
+  // Symbols
+  [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
+  [Symbol.unscopables]: { type: "Object" },
 };
 const REGEXP_ARRAY_PROPERTIES: Record<RegExpArrayPrototypeProperty, TypeInfo> =
   new Proxy(
@@ -619,6 +642,8 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     toWellFormed: RETURN_STRING,
     // Properties
     length: { type: "Number" },
+    // Symbols
+    [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
   } satisfies Record<StringPrototypeProperty, TypeInfo>,
   Number: {
     toExponential: RETURN_STRING,
@@ -632,9 +657,14 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
   Symbol: {
     description: { type: "String" },
     valueOf: { type: "Symbol" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toPrimitive]: { type: "Function", return: { type: "Symbol" } },
   } satisfies Record<SymbolPrototypeProperty, TypeInfo>,
   BigInt: {
     valueOf: { type: "BigInt" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<BigIntPrototypeProperty, TypeInfo>,
   Function: {
     apply: { type: "Function" },
@@ -645,6 +675,9 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     length: { type: "Number" },
     name: { type: "String" },
     prototype: { type: "Object" },
+    // Symbols
+    [Symbol.hasInstance]: { type: "Function", return: { type: "Boolean" } },
+    [Symbol.metadata]: { type: "Object" },
   } satisfies Record<FunctionPrototypeProperty, TypeInfo>,
   Array: ARRAY_PROPERTIES,
   Map: {
@@ -659,6 +692,9 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     values: { type: "Function", return: { type: "Iterator" } },
     // Properties
     size: { type: "Number" },
+    // Symbols
+    [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<MapPrototypeProperty, TypeInfo>,
   Set: {
     add: { type: "Function" },
@@ -678,6 +714,9 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     values: { type: "Function", return: { type: "Iterator" } },
     // Properties
     size: { type: "Number" },
+    // Symbols
+    [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<SetPrototypeProperty, TypeInfo>,
   RegExp: {
     compile: { type: "Function" },
@@ -698,6 +737,18 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     sticky: { type: "Boolean" },
     unicode: { type: "Boolean" },
     unicodeSets: { type: "Boolean" },
+    // Symbols
+    [Symbol.match]: { type: "Function", return: { type: "RegExp" } },
+    [Symbol.replace]: { type: "Function", return: { type: "String" } },
+    [Symbol.search]: { type: "Function", return: { type: "Number" } },
+    [Symbol.split]: {
+      type: "Function",
+      return: { type: "Array", properties: REGEXP_ARRAY_PROPERTIES },
+    },
+    [Symbol.matchAll]: {
+      type: "Function",
+      return: { type: "Iterator", properties: REGEXP_ARRAY_PROPERTIES },
+    },
   } satisfies Record<RegExpPrototypeProperty, TypeInfo>,
   Date: {
     getDate: RETURN_NUMBER,
@@ -744,11 +795,15 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     toTimeString: RETURN_STRING,
     toUTCString: RETURN_STRING,
     valueOf: RETURN_NUMBER,
+    // Symbols
+    [Symbol.toPrimitive]: { type: "Function", return: { type: "Date" } },
   } satisfies Record<DatePrototypeProperty, TypeInfo>,
   Promise: {
     catch: { type: "Function", return: { type: "Promise" } },
     finally: { type: "Function", return: { type: "Promise" } },
     then: { type: "Function", return: { type: "Promise" } },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<PromisePrototypeProperty, TypeInfo>,
   Int8Array: buildTypedArrayPrototypeTypeInfo("Int8Array"),
   Uint8Array: buildTypedArrayPrototypeTypeInfo("Uint8Array"),
@@ -789,6 +844,8 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     byteLength: { type: "Number" },
     byteOffset: { type: "Number" },
     buffer: { type: "ArrayBuffer" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<DataViewPrototypeProperty, TypeInfo>,
   ArrayBuffer: {
     resize: { type: "Function" },
@@ -803,6 +860,8 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     detached: { type: "Boolean" },
     maxByteLength: { type: "Number" },
     resizable: { type: "Boolean" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<ArrayBufferPrototypeProperty, TypeInfo>,
   SharedArrayBuffer: {
     grow: { type: "Function" },
@@ -811,17 +870,26 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     byteLength: { type: "Number" },
     growable: { type: "Boolean" },
     maxByteLength: { type: "Number" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
+    get [Symbol.species]() {
+      return WELLKNOWN_GLOBALS.SharedArrayBuffer!;
+    },
   } satisfies Record<SharedArrayBufferPrototypeProperty, TypeInfo>,
   WeakMap: {
     delete: RETURN_BOOLEAN,
     get: { type: "Function" },
     has: RETURN_BOOLEAN,
     set: { type: "Function" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<WeakMapPrototypeProperty, TypeInfo>,
   WeakSet: {
     add: { type: "Function" },
     delete: RETURN_BOOLEAN,
     has: RETURN_BOOLEAN,
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<WeakSetPrototypeProperty, TypeInfo>,
   Iterator: {
     next: { type: "Function" },
@@ -839,6 +907,10 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     some: RETURN_BOOLEAN,
     every: RETURN_BOOLEAN,
     find: { type: "Function" },
+    // Symbols
+    [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
+    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.dispose]: { type: "Function" },
   } satisfies Record<IteratorPrototypeProperty, TypeInfo>,
   DisposableStack: {
     adopt: { type: "Function" },
@@ -847,6 +919,9 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     disposed: { type: "Boolean" },
     move: { type: "Function", return: { type: "DisposableStack" } },
     use: { type: "Function" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.dispose]: { type: "Function" },
   } satisfies Record<DisposableStackPrototypeProperty, TypeInfo>,
   AsyncDisposableStack: {
     adopt: { type: "Function", return: { type: "Promise" } },
@@ -855,13 +930,20 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     disposed: { type: "Boolean" },
     move: { type: "Function", return: { type: "AsyncDisposableStack" } },
     use: { type: "Function" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.asyncDispose]: { type: "Function" },
   } satisfies Record<AsyncDisposableStackPrototypeProperty, TypeInfo>,
   WeakRef: {
     deref: { type: "Function" },
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<WeakRefPrototypeProperty, TypeInfo>,
   FinalizationRegistry: {
     register: { type: "Function" },
     unregister: RETURN_BOOLEAN,
+    // Symbols
+    [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<FinalizationRegistryPrototypeProperty, TypeInfo>,
 };
 
@@ -870,7 +952,7 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
  */
 export function getPropertyType(
   typeInfo: TypeInfo,
-  propertyName: string | number,
+  propertyName: string | number | symbol,
 ): TypeInfo | null {
   const prop = typeInfo.properties?.[propertyName];
   if (prop) {
@@ -942,5 +1024,8 @@ function buildTypedArrayPrototypeTypeInfo(
     buffer: { type: "ArrayBuffer" },
     byteLength: { type: "Number" },
     byteOffset: { type: "Number" },
+    // Symbols
+    [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
+    [Symbol.toStringTag]: { type: "String" },
   };
 }

@@ -3,6 +3,9 @@
 exports[`type-tracer-for-es buildTypeTracerForES array.js const a = [1, 2, 3, 4, 5];
 
 target(a);
+
+target(a[Symbol.iterator]);
+target(a[Symbol.iterator]());
  1`] = `
 Array [
   Object {
@@ -10,6 +13,22 @@ Array [
     "types": Array [
       Array [
         "Array",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a[Symbol.iterator])",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a[Symbol.iterator]())",
+    "types": Array [
+      Array [
+        "Iterator",
       ],
     ],
   },
