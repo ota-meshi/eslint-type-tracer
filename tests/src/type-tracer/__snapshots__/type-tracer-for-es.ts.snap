@@ -1,0 +1,15 @@
+// test-snapshot v1
+
+exports[`type-tracer-for-es buildTypeTracerForES array.js const a = [1, 2, 3, 4, 5];
+
+target(a);
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      "Array",
+    ],
+  },
+]
+`;
