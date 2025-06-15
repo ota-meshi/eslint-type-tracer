@@ -33,6 +33,37 @@ Array [
 ]
 `;
 
+exports[`type-tracer-for-ts buildTypeTracerForTS function.ts import { target } from "./target";
+
+target(fn, String);
+
+function fn<X extends (...arg: any[]) => void>(
+  a: { (a: any): void },
+  b: () => unknown,
+  c: X,
+): void {
+  target(a, b, c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(fn, String)",
+    "types": Array [
+      "Function",
+      "Function",
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      "Function",
+      "Function",
+      "Function",
+    ],
+  },
+]
+`;
+
 exports[`type-tracer-for-ts buildTypeTracerForTS target.ts export function target(...args: any[]): void {
   throw new Error("For Test");
 }

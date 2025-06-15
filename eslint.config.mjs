@@ -69,6 +69,7 @@ export default [
     files: ["tests/fixtures/**/*.*"],
     rules: {
       "@typescript-eslint/no-shadow": "off",
+      "@typescript-eslint/prefer-function-type": "off",
     },
   },
   {
