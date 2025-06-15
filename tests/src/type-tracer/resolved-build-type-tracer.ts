@@ -9,10 +9,6 @@ const libIndexPath = path.resolve(
   fileURLToPath(import.meta.url),
   "../../../../lib/index.js",
 );
-const srcIndexPath = path.resolve(
-  fileURLToPath(import.meta.url),
-  "../../../../src/index.ts",
-);
 
 let buildTypeTracer:
   | ((sourceCode: SourceCode) => (node: TSESTree.Node) => TypeName[] | null)
@@ -30,7 +26,8 @@ export async function resolvedBuildTypeTracer(): Promise<
     }
   }
   if (!buildTypeTracer) {
-    buildTypeTracer = (await import(srcIndexPath)).buildTypeTracer;
+    buildTypeTracer = (await import("../../../src/index.ts"))
+      .buildTypeTracer as any;
   }
   return buildTypeTracer!;
 }
