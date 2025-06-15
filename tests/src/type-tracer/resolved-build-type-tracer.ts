@@ -1,5 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/types";
-import type { TypeName } from "../../../src/index.js";
+import type { TypeName } from "../../../src/index.ts";
 import type { SourceCode } from "eslint";
 import path from "path";
 import fs from "fs";

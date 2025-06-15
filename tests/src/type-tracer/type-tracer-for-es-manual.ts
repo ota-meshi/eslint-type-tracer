@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "assert";
-import type { TypeName } from "../../../src/type-tracer/types.js";
+import type { TypeName } from "../../../src/type-tracer/types.ts";
 import type { Rule } from "eslint";
 import { Linter } from "eslint";
 import type { TSESTree } from "@typescript-eslint/types";
