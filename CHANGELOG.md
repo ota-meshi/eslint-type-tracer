@@ -1,5 +1,11 @@
 # eslint-type-tracer
 
+## 0.3.0
+
+### Minor Changes
+
+- [#5](https://github.com/ota-meshi/eslint-type-tracer/pull/5) [`f259fc2`](https://github.com/ota-meshi/eslint-type-tracer/commit/f259fc2f449574e6b078e3c774d6f245dfab72a6) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add buildTypeTracer
+
 ## 0.2.0
 
 ### Minor Changes

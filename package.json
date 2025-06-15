@@ -1,6 +1,6 @@
 {
   "name": "eslint-type-tracer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "The type tracer for ESLint rules.",
   "main": "lib/index.js",
   "type": "module",
