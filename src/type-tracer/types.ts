@@ -51,7 +51,7 @@ export type TypeName =
 export type TypeInfo = {
   type: TypeName | null;
   return?: TypeInfo | null;
-  properties?: Record<string, TypeInfo | undefined>;
+  properties?: Record<string | symbol, TypeInfo | undefined>;
   prototypeType?: TypeName;
 };
 
@@ -59,30 +59,11 @@ export type WellKnownGlobals = Record<string, TypeInfo | undefined>;
 
 export type WellKnownPrototypes = Record<
   string,
-  Record<string, TypeInfo | undefined> | undefined
+  Record<string | symbol, TypeInfo | undefined> | undefined
 >;
 
-type ExcludeProperty =
-  | "prototype"
-  | typeof Symbol.species
-  | typeof Symbol.toStringTag;
-type ExcludePrototypeProperty =
-  | "toString"
-  | "toLocaleString"
-  | typeof Symbol.iterator
-  | typeof Symbol.toPrimitive
-  | typeof Symbol.toStringTag
-  | typeof Symbol.hasInstance
-  | typeof Symbol.unscopables
-  | typeof Symbol.match
-  | typeof Symbol.replace
-  | typeof Symbol.search
-  | typeof Symbol.split
-  | typeof Symbol.matchAll
-  | typeof Symbol.species
-  | typeof Symbol.dispose
-  | typeof Symbol.asyncDispose
-  | typeof Symbol.metadata;
+type ExcludeProperty = "prototype";
+type ExcludePrototypeProperty = "toString" | "toLocaleString";
 
 export type ObjectProperty = keyof typeof Object;
 // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types -- ignore
