@@ -1,5 +1,11 @@
 # eslint-type-tracer
 
+## 0.3.1
+
+### Patch Changes
+
+- [#9](https://github.com/ota-meshi/eslint-type-tracer/pull/9) [`11d6760`](https://github.com/ota-meshi/eslint-type-tracer/commit/11d676028e52ee9046554da1c98aadbbb4cd21e7) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add support for well-known symbols
+
 ## 0.3.0
 
 ### Minor Changes
