@@ -43,9 +43,13 @@ export function buildTypeTracerForTS(
         if (!name) return false;
         if (name.startsWith("Readonly")) {
           result.push(name.slice(8) as TypeName);
-        } else if (name === "CallableFunction") result.push("Function");
-        else if (name === "IteratorObject") result.push("Iterator");
-        else result.push(name as TypeName);
+        } else if (name === "CallableFunction") {
+          result.push("Function");
+        } else if (name === "IteratorObject") {
+          result.push("Iterator");
+        } else {
+          result.push(name as TypeName);
+        }
         return false;
       },
     });

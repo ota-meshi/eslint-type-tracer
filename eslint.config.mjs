@@ -85,6 +85,9 @@ export default [
       "prefer-template": "off",
       "no-useless-concat": "off",
       "n/no-unsupported-features/es-syntax": "off",
+      "prefer-const": "off",
+      "@typescript-eslint/explicit-member-accessibility": "off",
+      "@typescript-eslint/no-empty-function": "off",
     },
   },
   {
