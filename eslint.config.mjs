@@ -88,6 +88,12 @@ export default [
       "prefer-const": "off",
       "@typescript-eslint/explicit-member-accessibility": "off",
       "@typescript-eslint/no-empty-function": "off",
+      eqeqeq: "off",
+      "no-constant-binary-expression": "off",
+      "no-new-wrappers": "off",
+      "no-new-native-nonconstructor": "off",
+      "no-new-object": "off",
+      "no-array-constructor": "off",
     },
   },
   {
