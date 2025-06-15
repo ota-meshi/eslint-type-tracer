@@ -1,5 +1,5 @@
 import { deepStrictEqual } from "assert";
-import { buildExpressionTypeProvider } from "../../../src/type-tracer/type-tracer-for-es";
+import { buildTypeTracerForES } from "../../../src/type-tracer/type-tracer-for-es";
 import type { TypeName } from "../../../src/type-tracer/types";
 import type { Rule } from "eslint";
 import { Linter } from "eslint";
@@ -9,7 +9,7 @@ import { Linter } from "eslint";
 // -----------------------------------------------------------------------------
 
 describe("type-tracer-for-es", () => {
-  describe("buildExpressionTypeProvider", () => {
+  describe("buildTypeTracerForES", () => {
     for (const { code, result, only } of [
       {
         code: "target('foo');",
@@ -485,13 +485,13 @@ describe("type-tracer-for-es", () => {
       },
     ] as { code: string; result: (TypeName | null)[]; only?: boolean }[]) {
       (only ? it.only : it)(code, () => {
-        deepStrictEqual(getResultOfBuildExpressionTypeProvider(code), result);
+        deepStrictEqual(getResultOfBuildTypeTracerForES(code), result);
       });
     }
   });
 });
 
-function getResultOfBuildExpressionTypeProvider(code: string) {
+function getResultOfBuildTypeTracerForES(code: string) {
   const linter = new Linter({ configType: "flat" });
 
   const result: (TypeName | null)[] = [];
@@ -501,7 +501,7 @@ function getResultOfBuildExpressionTypeProvider(code: string) {
         rules: {
           "test-rule": {
             create(context: Rule.RuleContext) {
-              const getType = buildExpressionTypeProvider(context.sourceCode);
+              const getType = buildTypeTracerForES(context.sourceCode);
               return {
                 "CallExpression[callee.name = target]"(node) {
                   result.push(...node.arguments.map(getType));

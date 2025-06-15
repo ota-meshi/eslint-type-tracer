@@ -1,0 +1,39 @@
+// test-snapshot v1
+
+exports[`type-tracer-for-ts buildTypeTracerForTS array.ts import { target } from "./target";
+
+const a = [1, 2, 3, 4, 5];
+
+target([], a);
+
+function fn<X extends any[]>(
+  a: readonly number[],
+  b: readonly number[],
+  c: X,
+): void {
+  target(a, b, c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target([], a)",
+    "types": Array [
+      "Array",
+      "Array",
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      "Array",
+      "Array",
+      "Array",
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS target.ts export function target(...args: any[]): void {
+  throw new Error("For Test");
+}
+ 1`] = `Array []`;

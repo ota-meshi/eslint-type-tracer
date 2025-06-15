@@ -49,7 +49,7 @@ const cache = new WeakMap<
  * Build expression type provider.
  * @returns Returns an expression type provider.
  */
-export function buildExpressionTypeProvider(
+function buildExpressionTypeProvider(
   sourceCode: SourceCode,
 ): (node: TSESTree.Expression) => TypeName | null {
   const key = sourceCode.ast;

@@ -66,9 +66,9 @@ export default [
     },
   }),
   {
-    files: ["tests/fixtures/**/*ignore-format*.js"],
+    files: ["tests/fixtures/**/*.*"],
     rules: {
-      "prettier/prettier": "off",
+      "@typescript-eslint/no-shadow": "off",
     },
   },
   {
