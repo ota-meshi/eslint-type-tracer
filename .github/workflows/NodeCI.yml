@@ -18,21 +18,6 @@ jobs:
         run: npm run lint
       - name: tsc
         run: npm run tsc
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 21.x, 22.x]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install Packages
-        run: npm install -f
-      - name: Test
-        run: npm test
   build:
     runs-on: ubuntu-latest
     steps:
@@ -50,12 +35,36 @@ jobs:
           name: lib
           path: ./lib/
           retention-days: 1
+  test:
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 21.x, 22.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install Packages
+        run: npm install -f
+      - name: Download lib
+        uses: actions/download-artifact@v4
+        with:
+          name: lib
+          path: ./lib/
+      - name: Test
+        run: |+
+          export CI=true
+          node lib/index.cjs
+          npm test
   test-with-eslint8:
+    needs: [build]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
-    needs: [build]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

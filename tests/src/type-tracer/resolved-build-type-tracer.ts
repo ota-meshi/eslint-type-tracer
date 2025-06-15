@@ -24,10 +24,12 @@ export async function resolvedBuildTypeTracer(): Promise<
   if (buildTypeTracer) return buildTypeTracer;
   // eslint-disable-next-line no-process-env -- ignore
   if (process.env.CI) {
-    buildTypeTracer = fs.existsSync(libIndexPath)
-      ? (await import(libIndexPath)).buildTypeTracer
-      : (await import(srcIndexPath)).buildTypeTracer;
-  } else {
+    if (fs.existsSync(libIndexPath)) {
+      console.log("Resolving buildTypeTracer from lib/index.js");
+      buildTypeTracer = (await import(libIndexPath)).buildTypeTracer;
+    }
+  }
+  if (!buildTypeTracer) {
     buildTypeTracer = (await import(srcIndexPath)).buildTypeTracer;
   }
   return buildTypeTracer!;
