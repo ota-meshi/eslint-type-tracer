@@ -75,7 +75,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install Target Packages
         run: |+
-          pnp install -f
+          npm install -f
           npm i -D eslint@^8 -f
           npm i -D @typescript-eslint/parser@^5 -f
       - name: Download lib
