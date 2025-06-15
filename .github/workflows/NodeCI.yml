@@ -73,4 +73,5 @@ jobs:
       - name: Test
         run: |+
           export CI=true
+          node lib/index.cjs
           npm test
