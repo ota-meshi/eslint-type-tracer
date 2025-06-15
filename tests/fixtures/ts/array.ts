@@ -10,4 +10,6 @@ function fn<X extends any[]>(
   c: X,
 ): void {
   target(a, b, c);
+
+  target(a[0], b[0], c[0]);
 }

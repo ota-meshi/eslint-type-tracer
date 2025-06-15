@@ -3,6 +3,7 @@ import { buildTypeTracerForES } from "../../../src/type-tracer/type-tracer-for-e
 import type { TypeName } from "../../../src/type-tracer/types";
 import type { Rule } from "eslint";
 import { Linter } from "eslint";
+import type { TSESTree } from "@typescript-eslint/types";
 
 // -----------------------------------------------------------------------------
 // Tests
@@ -503,8 +504,14 @@ function getResultOfBuildTypeTracerForES(code: string) {
             create(context: Rule.RuleContext) {
               const getType = buildTypeTracerForES(context.sourceCode);
               return {
-                "CallExpression[callee.name = target]"(node) {
-                  result.push(...node.arguments.map(getType));
+                "CallExpression[callee.name = target]"(
+                  node: TSESTree.CallExpression,
+                ) {
+                  result.push(
+                    ...node.arguments.map(
+                      (a) => getType(a as TSESTree.Expression)?.[0] || null,
+                    ),
+                  );
                 },
               };
             },

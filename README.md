@@ -47,21 +47,21 @@ Builds a type tracer function for use in ESLint rules. This function infers the 
 ```ts
 function buildTypeTracer(
   sourceCode: SourceCode
-): (node: TSESTree.Expression) => TypeName | null;
+): (node: TSESTree.Expression) => TypeName[];
 ```
 
 - `sourceCode`: The ESLint `SourceCode` object.
 
 **Returns:**
 
-A function that takes an expression node and returns the inferred type name as a string (e.g., `"Array"`, `"String"`, `"Number"`), or `null` if the type cannot be determined.
+A function that takes an expression node and returns an array of inferred type names (e.g., `["Array"]`). If the type cannot be determined, it returns an empty array `[]`。
 
 **Example:**
 
 ```ts
 const typeTrace = buildTypeTracer(context.sourceCode);
-const typeName = typeTrace(node);
-if (typeName === "Array") {
+const typeNames = typeTrace(node);
+if (typeNames.includes("Array")) {
   // node is inferred as Array
 }
 ```

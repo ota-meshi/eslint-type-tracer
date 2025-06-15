@@ -14,12 +14,8 @@ import type { Scope } from "eslint";
 export function buildTypeTracerForES(sourceCode: SourceCode): TypeTracer {
   const getType = buildExpressionTypeProvider(sourceCode);
   return function (node) {
-    const result = getSimpleExpressionType(node);
-    if (result != null) {
-      return result;
-    }
-
-    return getType(node);
+    const result = getSimpleExpressionType(node) || getType(node);
+    return result != null ? [result] : [];
   };
 }
 
@@ -32,11 +28,11 @@ export function buildTypeCheckerForES(
 ): TypeChecker {
   const tracer = buildTypeTracerForES(sourceCode);
   return (node, className): boolean | "aggressive" => {
-    const typeName = tracer(node);
-    if (typeName == null) {
+    const typeNames = tracer(node);
+    if (!typeNames.length) {
       return aggressiveResult;
     }
-    return typeName === className;
+    return typeNames.includes(className);
   };
 }
 

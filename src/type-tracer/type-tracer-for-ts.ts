@@ -21,32 +21,35 @@ try {
 export function buildTypeTracerForTS(
   sourceCode: SourceCode,
 ): TypeTracer | null {
-  const trace = buildTypeTracer<TypeName | null>(sourceCode);
+  const trace = buildTypeTracer<boolean>(sourceCode);
   if (!trace) return null;
 
   return function (node) {
     const type = getSimpleExpressionType(node);
     if (type) {
-      return type;
+      return [type];
     }
-    return (
-      trace(node, {
-        visitTypeName(typeName) {
-          return typeName as TypeName | null;
-        },
-        visitUnknown() {
-          return null;
-        },
-        visitSymbol(symbol, checker) {
-          const name = checker.getFullyQualifiedName(symbol);
-          if (!name) return null;
-          if (name.startsWith("Readonly")) return name.slice(8) as TypeName;
-          if (name === "CallableFunction") return "Function";
-          if (name === "IteratorObject") return "Iterator";
-          return name as TypeName;
-        },
-      }) || null
-    );
+    const result: TypeName[] = [];
+    trace(node, {
+      visitTypeName(typeName) {
+        result.push(typeName as TypeName);
+        return true;
+      },
+      visitUnknown() {
+        return false;
+      },
+      visitSymbol(symbol, checker) {
+        const name = checker.getFullyQualifiedName(symbol);
+        if (!name) return false;
+        if (name.startsWith("Readonly")) {
+          result.push(name.slice(8) as TypeName);
+        } else if (name === "CallableFunction") result.push("Function");
+        else if (name === "IteratorObject") result.push("Iterator");
+        else result.push(name as TypeName);
+        return false;
+      },
+    });
+    return result;
   };
 }
 /**
@@ -141,7 +144,7 @@ function buildTypeTracer<R>(sourceCode: SourceCode): Trace<R> | null {
    * Check if the type of the given node by the declaration of `node.property`.
    * @param memberAccessNode The MemberExpression or Property node.
    * @param ctx The trace context.
-   * @returns `true` if should disallow it.
+   * @returns a truthy value, if the process is complete.
    */
   function checkByPropertyDeclaration(
     memberAccessNode: TSESTree.MemberExpression | TSESTree.Property,
@@ -161,7 +164,7 @@ function buildTypeTracer<R>(sourceCode: SourceCode): Trace<R> | null {
           continue;
         }
         const type = checker.getTypeAtLocation(declaration.parent);
-        const r = type && typeEquals(type, ctx);
+        const r = type && visitType(type, ctx);
         if (r) {
           return r;
         }
@@ -175,7 +178,7 @@ function buildTypeTracer<R>(sourceCode: SourceCode): Trace<R> | null {
    * Check if the type of the given node by the type of `node.object`.
    * @param node The Expression node.
    * @param ctx The trace context.
-   * @returns `true` if should disallow it.
+   * @returns a truthy value, if the process is complete.
    */
   function checkByObjectExpressionType(
     node: TSESTree.Expression,
@@ -183,16 +186,16 @@ function buildTypeTracer<R>(sourceCode: SourceCode): Trace<R> | null {
   ): R | false {
     const tsNode = tsNodeMap.get(node)!;
     const type = checker.getTypeAtLocation(tsNode);
-    return typeEquals(type, ctx);
+    return visitType(type, ctx);
   }
 
   /**
-   * Check if the name of the given type is expected or not.
+   * Visit the type.
    * @param type The type to check.
    * @param ctx The trace context.
-   * @returns `true` if should disallow it.
+   * @returns a truthy value, if the process is complete.
    */
-  function typeEquals(type: typescript.Type, ctx: Context<R>): R | false {
+  function visitType(type: typescript.Type, ctx: Context<R>): R | false {
     // console.log(
     //     "typeEquals(%o, %o)",
     //     {
@@ -262,18 +265,18 @@ function buildTypeTracer<R>(sourceCode: SourceCode): Trace<R> | null {
     }
 
     if (isReferenceObject(type) && type.target !== type) {
-      return typeEquals(type.target, ctx);
+      return visitType(type.target, ctx);
     }
     if (isTypeParameter(type)) {
       const constraintType = getConstraintType(type);
       if (constraintType) {
-        return typeEquals(constraintType, ctx);
+        return visitType(constraintType, ctx);
       }
       return hasFullType ? false : ctx.visitUnknown();
     }
     if (isUnionOrIntersection(type)) {
       for (const t of type.types) {
-        const r = typeEquals(t, ctx);
+        const r = visitType(t, ctx);
         if (r) {
           return r;
         }
@@ -291,7 +294,7 @@ function buildTypeTracer<R>(sourceCode: SourceCode): Trace<R> | null {
    * Check if the symbol.escapedName of the given type is expected or not.
    * @param type The type to check.
    * @param ctx The trace context.
-   * @returns `true` if should disallow it.
+   * @returns a truthy value, if the process is complete.
    */
   function typeSymbolEscapedNameEquals(
     type: typescript.InterfaceType,

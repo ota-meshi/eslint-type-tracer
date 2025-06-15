@@ -8,7 +8,9 @@ Array [
   Object {
     "expr": "target(a)",
     "types": Array [
-      "Array",
+      Array [
+        "Array",
+      ],
     ],
   },
 ]

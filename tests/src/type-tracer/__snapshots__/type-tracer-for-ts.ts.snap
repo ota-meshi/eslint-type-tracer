@@ -12,22 +12,82 @@ function fn<X extends any[]>(
   c: X,
 ): void {
   target(a, b, c);
+
+  target(a[0], b[0], c[0]);
 }
  1`] = `
 Array [
   Object {
     "expr": "target([], a)",
     "types": Array [
-      "Array",
-      "Array",
+      Array [
+        "Array",
+      ],
+      Array [
+        "Array",
+      ],
     ],
   },
   Object {
     "expr": "target(a, b, c)",
     "types": Array [
-      "Array",
-      "Array",
-      "Array",
+      Array [
+        "Array",
+      ],
+      Array [
+        "Array",
+      ],
+      Array [
+        "Array",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a[0], b[0], c[0])",
+    "types": Array [
+      Array [
+        "Number",
+      ],
+      Array [
+        "Number",
+      ],
+      Array [],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS boolean.ts import { target } from "./target";
+
+const a = true;
+
+target(a);
+
+function fn<X extends true>(a: boolean, b: false, c: X): void {
+  target(a, b, c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "Boolean",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      Array [
+        "Boolean",
+      ],
+      Array [
+        "Boolean",
+      ],
+      Array [
+        "Boolean",
+      ],
     ],
   },
 ]
@@ -49,16 +109,94 @@ Array [
   Object {
     "expr": "target(fn, String)",
     "types": Array [
-      "Function",
-      "Function",
+      Array [
+        "Function",
+      ],
+      Array [
+        "Function",
+      ],
     ],
   },
   Object {
     "expr": "target(a, b, c)",
     "types": Array [
-      "Function",
-      "Function",
-      "Function",
+      Array [
+        "Function",
+      ],
+      Array [
+        "Function",
+      ],
+      Array [
+        "Function",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS object.ts import { target } from "./target";
+
+const a = {};
+
+target(a);
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS string.ts import { target } from "./target";
+
+const a = "Hello, World!";
+
+target(a);
+
+function fn<X extends "foo">(a: string, b: \`Hello, \${string}\`, c: X): void {
+  target(a, b, c);
+
+  target(a[0], b[0], c[0]);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "String",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a[0], b[0], c[0])",
+    "types": Array [
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
     ],
   },
 ]
