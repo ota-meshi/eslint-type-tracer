@@ -74,6 +74,7 @@ jobs:
         run: |+
           npm install -f
           npm i -D eslint@^8 -f
+          npm i -D @typescript-eslint/parser@^7
       - name: Download lib
         uses: actions/download-artifact@v4
         with:

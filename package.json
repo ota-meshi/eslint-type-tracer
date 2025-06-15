@@ -71,7 +71,6 @@
     "@types/semver": "^7.7.0",
     "@typescript-eslint/parser": "^8.32.1",
     "@typescript-eslint/types": "^8.32.1",
-    "assert": "^2.1.0",
     "esbuild": "^0.21.0",
     "esbuild-register": "^3.6.0",
     "eslint": "^9.27.0",
