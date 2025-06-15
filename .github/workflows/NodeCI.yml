@@ -67,14 +67,17 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 7
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Target Packages
         run: |+
-          npm install -f
-          npm i -D eslint@^8 -f
-          npm i -D @typescript-eslint/parser@^6
+          pnpm install -f
+          pnpm i -D eslint@^8 -f
+          pnpm i -D @typescript-eslint/parser@^6 -f
       - name: Download lib
         uses: actions/download-artifact@v4
         with:
@@ -84,4 +87,4 @@ jobs:
         run: |+
           export CI=true
           node lib/index.cjs
-          npm test
+          pnpm test
