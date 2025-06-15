@@ -17,21 +17,17 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - name: Setup Node.js
         uses: actions/setup-node@v4
       - name: Install Dependencies
-        run: pnpm install -f
+        run: npm install -f
 
-      - name: Create Release Pull Request or Publish to pnpm
+      - name: Create Release Pull Request or Publish to npm
         id: changesets
         uses: changesets/action@v1
         with:
-          version: pnpm run changeset:version
-          publish: pnpm run changeset:publish
+          version: npm run changeset:version
+          publish: npm run changeset:publish
           commit: "chore: release eslint-type-tracer"
           title: "chore: release eslint-type-tracer"
         env:

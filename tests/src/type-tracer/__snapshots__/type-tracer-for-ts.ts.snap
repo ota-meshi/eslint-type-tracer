@@ -1,0 +1,484 @@
+// test-snapshot v1
+
+exports[`type-tracer-for-ts buildTypeTracerForTS array.ts import { target } from "./target";
+
+const a = [1, 2, 3, 4, 5];
+
+target([], a);
+
+function fn<X extends any[]>(
+  a: readonly number[],
+  b: ReadonlyArray<number>,
+  c: X,
+  d: [string],
+): void {
+  target(a, b, c, d);
+
+  target(a[0], b[0], c[0], d[0]);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target([], a)",
+    "types": Array [
+      Array [
+        "Array",
+      ],
+      Array [
+        "Array",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c, d)",
+    "types": Array [
+      Array [
+        "Array",
+      ],
+      Array [
+        "Array",
+      ],
+      Array [
+        "Array",
+      ],
+      Array [
+        "Array",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a[0], b[0], c[0], d[0])",
+    "types": Array [
+      Array [
+        "Number",
+      ],
+      Array [
+        "Number",
+      ],
+      Array [],
+      Array [
+        "String",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS bigint.ts import { target } from "./target";
+
+const a = 1n;
+
+target(a);
+
+function fn<X extends 2n>(a: bigint, b: number, c: X): void {
+  target(a, BigInt(b), c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "BigInt",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, BigInt(b), c)",
+    "types": Array [
+      Array [
+        "BigInt",
+      ],
+      Array [
+        "BigInt",
+      ],
+      Array [
+        "BigInt",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS boolean.ts import { target } from "./target";
+
+const a = true;
+
+target(a);
+
+function fn<X extends true>(a: boolean, b: false, c: X): void {
+  target(a, b, c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "Boolean",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      Array [
+        "Boolean",
+      ],
+      Array [
+        "Boolean",
+      ],
+      Array [
+        "Boolean",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS function.ts import { target } from "./target";
+
+target(fn, String);
+
+function fn<X extends (...arg: any[]) => void>(
+  a: { (a: any): void },
+  b: () => unknown,
+  c: X,
+): void {
+  target(a, b, c);
+}
+
+target(function fn() {});
+
+target(() => {});
+
+function _1() {
+  let foo = function () {};
+  target(foo);
+}
+
+function _2() {
+  let foo = () => {};
+  target(foo);
+}
+
+function _3() {
+  function foo() {}
+
+  target(foo);
+}
+
+function f(a: () => number) {
+  target(a);
+}
+
+function _4() {
+  let foo = { fn() {} };
+  target(foo.fn);
+}
+
+target(Object.assign);
+
+function _5() {
+  class Foo {
+    // @ts-expect-error -- test
+    fn();
+  }
+  const foo = new Foo();
+  target(foo.fn);
+}
+
+function _6() {
+  let foo = Function();
+  target(foo);
+}
+
+function _7() {
+  let foo = String;
+  target(foo);
+}
+
+function _8() {
+  function f<T extends (a: any) => T>(a: T) {
+    target(a);
+  }
+}
+
+function _9() {
+  function f<T extends ((a: any) => T) | "union">(a: T) {
+    target(a);
+  }
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(fn, String)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+      Array [
+        "Function",
+      ],
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(function fn() {})",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(() => {})",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(foo)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(foo)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(foo)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(foo.fn)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(Object.assign)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(foo.fn)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(foo)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(foo)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "Function",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS intl.ts import { target } from "./target";
+
+target(new Intl.Segmenter());
+
+function fn<X extends Intl.Segmenter>(a: Intl.Segmenter, b: X): void {
+  target(a, b);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(new Intl.Segmenter())",
+    "types": Array [
+      Array [
+        "Intl.Segmenter",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b)",
+    "types": Array [
+      Array [
+        "Intl.Segmenter",
+      ],
+      Array [
+        "Intl.Segmenter",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS object.ts import { target } from "./target";
+
+const a = {};
+
+target(a);
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS string.ts import { target } from "./target";
+
+const a = "Hello, World!";
+
+target(a);
+
+function fn<X extends "foo">(a: string, b: \`Hello, \${string}\`, c: X): void {
+  target(a, b, c);
+
+  target(a[0], b[0], c[0]);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "String",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a[0], b[0], c[0])",
+    "types": Array [
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
+      Array [
+        "String",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS symbol.ts import { target } from "./target";
+
+const a = Symbol.iterator;
+
+target(a);
+
+function fn<X extends symbol>(a: symbol, b: typeof a, c: X): void {
+  target(a, b, c);
+}
+ 1`] = `
+Array [
+  Object {
+    "expr": "target(a)",
+    "types": Array [
+      Array [
+        "Symbol",
+      ],
+    ],
+  },
+  Object {
+    "expr": "target(a, b, c)",
+    "types": Array [
+      Array [
+        "Symbol",
+      ],
+      Array [
+        "Symbol",
+      ],
+      Array [
+        "Symbol",
+      ],
+    ],
+  },
+]
+`;
+
+exports[`type-tracer-for-ts buildTypeTracerForTS target.ts export function target(...args: any[]): void {
+  throw new Error("For Test");
+}
+ 1`] = `Array []`;

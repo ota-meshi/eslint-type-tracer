@@ -66,9 +66,28 @@ export default [
     },
   }),
   {
-    files: ["tests/fixtures/**/*ignore-format*.js"],
+    files: ["tests/**/*.ts"],
     rules: {
-      "prettier/prettier": "off",
+      "@typescript-eslint/no-misused-promises": "off",
+      "require-atomic-updates": "off",
+    },
+  },
+  {
+    files: ["tests/fixtures/**/*.*"],
+    rules: {
+      "@typescript-eslint/no-shadow": "off",
+      "@typescript-eslint/prefer-function-type": "off",
+      "@typescript-eslint/array-type": "off",
+      "no-empty-function": "off",
+      "no-var": "off",
+      "no-redeclare": "off",
+      "no-use-before-define": "off",
+      "prefer-template": "off",
+      "no-useless-concat": "off",
+      "n/no-unsupported-features/es-syntax": "off",
+      "prefer-const": "off",
+      "@typescript-eslint/explicit-member-accessibility": "off",
+      "@typescript-eslint/no-empty-function": "off",
     },
   },
   {

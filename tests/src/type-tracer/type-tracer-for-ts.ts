@@ -6,11 +6,12 @@ import { Linter } from "eslint";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
+import * as tsParser from "@typescript-eslint/parser";
 import { resolvedBuildTypeTracer } from "./resolved-build-type-tracer.ts";
 
 const FIXTURES_ROOT = path.resolve(
   fileURLToPath(import.meta.url),
-  "../../../fixtures/es",
+  "../../../fixtures/ts",
 );
 
 function* extractFixtures(dir = FIXTURES_ROOT): Generator<{
@@ -22,7 +23,7 @@ function* extractFixtures(dir = FIXTURES_ROOT): Generator<{
   for (const dirent of fs.readdirSync(dir, { withFileTypes: true })) {
     const filePath = path.join(dir, dirent.name);
     if (dirent.isFile()) {
-      if (dirent.name.endsWith(".js")) {
+      if (dirent.name.endsWith(".ts")) {
         yield {
           name: path.relative(FIXTURES_ROOT, filePath),
           code: fs.readFileSync(filePath, "utf8"),
@@ -35,8 +36,8 @@ function* extractFixtures(dir = FIXTURES_ROOT): Generator<{
   }
 }
 
-describe("type-tracer-for-es", () => {
-  describe("buildTypeTracerForES", () => {
+describe("type-tracer-for-ts", () => {
+  describe("buildTypeTracerForTS", () => {
     for (const { name, code, filename, only } of extractFixtures()) {
       describe(name, () => {
         (only ? it.only : it)(code, async () => {
@@ -84,6 +85,11 @@ async function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
       languageOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
+        parser: tsParser,
+        parserOptions: {
+          tsconfigRootDir: FIXTURES_ROOT,
+          project: "tsconfig.test.json",
+        },
       },
       rules: { "test/test-rule": "warn" },
     },

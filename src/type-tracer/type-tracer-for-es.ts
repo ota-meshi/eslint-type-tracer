@@ -1,10 +1,10 @@
 import { findVariable, getPropertyName } from "@eslint-community/eslint-utils";
-import { WELLKNOWN_GLOBALS, getPropertyType } from "./es-types";
-import type { TypeTracer } from "./utils";
-import { getSimpleExpressionType } from "./utils";
+import { WELLKNOWN_GLOBALS, getPropertyType } from "./es-types.ts";
+import type { TypeChecker, TypeTracer } from "./utils.ts";
+import { getSimpleExpressionType } from "./utils.ts";
 import type { AST, SourceCode } from "eslint";
 import type { TSESTree } from "@typescript-eslint/types";
-import type { TypeInfo, TypeName } from "./types";
+import type { TypeInfo, TypeName } from "./types.ts";
 import type { Scope } from "eslint";
 
 /**
@@ -14,12 +14,25 @@ import type { Scope } from "eslint";
 export function buildTypeTracerForES(sourceCode: SourceCode): TypeTracer {
   const getType = buildExpressionTypeProvider(sourceCode);
   return function (node) {
-    const result = getSimpleExpressionType(node);
-    if (result != null) {
-      return result;
-    }
+    const result = getSimpleExpressionType(node) || getType(node);
+    return result != null ? [result] : [];
+  };
+}
 
-    return getType(node);
+/**
+ * Build type checker for ECMAScript.
+ */
+export function buildTypeCheckerForES(
+  sourceCode: SourceCode,
+  aggressiveResult: false | "aggressive",
+): TypeChecker {
+  const tracer = buildTypeTracerForES(sourceCode);
+  return (node, className): boolean | "aggressive" => {
+    const typeNames = tracer(node);
+    if (!typeNames.length) {
+      return aggressiveResult;
+    }
+    return typeNames.includes(className);
   };
 }
 
@@ -32,7 +45,7 @@ const cache = new WeakMap<
  * Build expression type provider.
  * @returns Returns an expression type provider.
  */
-export function buildExpressionTypeProvider(
+function buildExpressionTypeProvider(
   sourceCode: SourceCode,
 ): (node: TSESTree.Expression) => TypeName | null {
   const key = sourceCode.ast;
