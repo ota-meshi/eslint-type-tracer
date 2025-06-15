@@ -18,18 +18,18 @@
     "node": "^18 || >=20"
   },
   "scripts": {
-    "build": "pnpm run build:tsdown",
+    "build": "npm run build:tsdown",
     "build:tsdown": "tsdown",
     "lint": "eslint .",
     "tsc": "tsc",
     "eslint-fix": "eslint . --fix",
-    "test": "pnpm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000",
-    "test:update": "pnpm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000 --update",
-    "cover": "nyc --reporter=lcov pnpm run test",
+    "test": "npm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000",
+    "test:update": "npm run mocha -- \"tests/src/**/*.ts\" --reporter=dot --timeout=60000 --update",
+    "cover": "nyc --reporter=lcov npm run test",
     "ts": "node -r esbuild-register",
-    "mocha": "pnpm run ts ./node_modules/mocha/bin/mocha.js",
+    "mocha": "npm run ts ./node_modules/mocha/bin/mocha.js",
     "changeset:version": "changeset version && git add --all",
-    "prechangeset:publish": "pnpm run build",
+    "prechangeset:publish": "npm run build",
     "changeset:publish": "changeset publish"
   },
   "repository": {

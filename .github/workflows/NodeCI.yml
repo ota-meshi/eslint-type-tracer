@@ -11,16 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
       - name: Install Packages
-        run: pnpm install -f
+        run: npm install -f
       - name: Lint
-        run: pnpm run lint
+        run: npm run lint
       - name: tsc
-        run: pnpm run tsc
+        run: npm run tsc
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -28,17 +25,14 @@ jobs:
         node-version: [18.x, 20.x, 21.x, 22.x]
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Packages
-        run: pnpm install -f
+        run: npm install -f
       - name: Test
-        run: pnpm test
+        run: npm test
   test-with-eslint8:
     runs-on: ubuntu-latest
     strategy:
@@ -46,15 +40,12 @@ jobs:
         node-version: [14.x, 16.x, 18.x]
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 7
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Target Packages
         run: |+
-          pnpm install -f
-          pnpm i -D eslint@^8 -f
+          npm install -f
+          npm i -D eslint@^8 -f
       - name: Test
-        run: pnpm test
+        run: npm test
