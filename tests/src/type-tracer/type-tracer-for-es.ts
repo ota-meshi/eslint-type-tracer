@@ -84,6 +84,10 @@ async function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
       languageOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
+        globals: {
+          Float16Array: "readonly",
+          Intl: "readonly",
+        },
       },
       rules: { "test/test-rule": "warn" },
     },
