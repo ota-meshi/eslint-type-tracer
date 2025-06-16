@@ -1,5 +1,13 @@
 # eslint-type-tracer
 
+## 0.4.0
+
+### Minor Changes
+
+- [#9](https://github.com/ota-meshi/eslint-type-tracer/pull/9) [`11d6760`](https://github.com/ota-meshi/eslint-type-tracer/commit/11d676028e52ee9046554da1c98aadbbb4cd21e7) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add support for well-known symbols
+
+- [#11](https://github.com/ota-meshi/eslint-type-tracer/pull/11) [`65f062b`](https://github.com/ota-meshi/eslint-type-tracer/commit/65f062baaed4142b242acdf977df9e4e2b81f992) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add support for Atomics properties and Uint8Array to/from Base64 and Hex
+
 ## 0.3.0
 
 ### Minor Changes
