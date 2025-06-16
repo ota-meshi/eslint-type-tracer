@@ -55,6 +55,7 @@ import type {
   WeakRefPrototypeProperty,
   FinalizationRegistryPrototypeProperty,
   TypedArrayProperty,
+  AtomicsProperty,
 } from "./types";
 
 const RETURN_STRING: TypeInfo = {
@@ -294,7 +295,10 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     } satisfies Record<PromiseProperty, TypeInfo | undefined>,
   },
   Int8Array: buildGlobalTypedArrayTypeInfo("Int8Array"),
-  Uint8Array: buildGlobalTypedArrayTypeInfo("Uint8Array"),
+  Uint8Array: buildGlobalTypedArrayTypeInfo("Uint8Array", {
+    fromBase64: { type: "Function" },
+    fromHex: { type: "Function" },
+  }),
   Uint8ClampedArray: buildGlobalTypedArrayTypeInfo("Uint8ClampedArray"),
   Int16Array: buildGlobalTypedArrayTypeInfo("Int16Array"),
   Uint16Array: buildGlobalTypedArrayTypeInfo("Uint16Array"),
@@ -509,6 +513,35 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
       captureStackTrace: { type: "Function" },
       stackTraceLimit: { type: "Number" },
     } satisfies Record<ErrorProperty, TypeInfo | undefined>,
+  },
+  Atomics: {
+    type: "Object",
+    properties: {
+      add: RETURN_NUMBER,
+      and: RETURN_NUMBER,
+      compareExchange: RETURN_NUMBER,
+      exchange: RETURN_NUMBER,
+      isLockFree: RETURN_BOOLEAN,
+      load: RETURN_NUMBER,
+      notify: RETURN_NUMBER,
+      or: RETURN_NUMBER,
+      store: RETURN_NUMBER,
+      sub: RETURN_NUMBER,
+      wait: RETURN_STRING,
+      waitAsync: {
+        type: "Function",
+        return: {
+          type: "Object",
+          properties: {
+            async: { type: "Boolean" },
+            // value: { type: "Promise" or "String" },
+          },
+        },
+      },
+      xor: RETURN_NUMBER,
+      pause: { type: "Function" },
+      [Symbol.toStringTag]: { type: "String" },
+    } satisfies Record<AtomicsProperty, TypeInfo | undefined>,
   },
 };
 
@@ -806,7 +839,12 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     [Symbol.toStringTag]: { type: "String" },
   } satisfies Record<PromisePrototypeProperty, TypeInfo>,
   Int8Array: buildTypedArrayPrototypeTypeInfo("Int8Array"),
-  Uint8Array: buildTypedArrayPrototypeTypeInfo("Uint8Array"),
+  Uint8Array: buildTypedArrayPrototypeTypeInfo("Uint8Array", {
+    toBase64: { type: "Function", return: { type: "String" } },
+    toHex: { type: "Function", return: { type: "String" } },
+    setFromBase64: { type: "Function" },
+    setFromHex: { type: "Function" },
+  }),
   Uint8ClampedArray: buildTypedArrayPrototypeTypeInfo("Uint8ClampedArray"),
   Int16Array: buildTypedArrayPrototypeTypeInfo("Int16Array"),
   Uint16Array: buildTypedArrayPrototypeTypeInfo("Uint16Array"),
@@ -969,7 +1007,10 @@ export function getPropertyType(
 /**
  * Builds the type information for global typed arrays.
  */
-function buildGlobalTypedArrayTypeInfo(type: TypeName): TypeInfo {
+function buildGlobalTypedArrayTypeInfo<K extends string = never>(
+  type: TypeName,
+  otherProperties: Partial<Record<K, TypeInfo>> = {},
+): TypeInfo {
   return {
     type: "Function",
     return: { type },
@@ -978,16 +1019,19 @@ function buildGlobalTypedArrayTypeInfo(type: TypeName): TypeInfo {
       BYTES_PER_ELEMENT: { type: "Number" },
       from: { type: "Function", return: { type } },
       of: { type: "Function", return: { type } },
-    } satisfies Record<TypedArrayProperty, TypeInfo | undefined>,
+      ...otherProperties,
+    } satisfies Record<TypedArrayProperty | K, TypeInfo | undefined>,
   };
 }
 
 /**
  * Builds the type information for typed array prototypes.
  */
-function buildTypedArrayPrototypeTypeInfo(
+function buildTypedArrayPrototypeTypeInfo<K extends string = never>(
   type: TypeName,
-): Record<TypedArrayPrototypeProperty, TypeInfo> {
+  otherProperties: Partial<Record<K, TypeInfo>> = {},
+): Record<TypedArrayPrototypeProperty, TypeInfo> &
+  Partial<Record<K, TypeInfo>> {
   return {
     at: { type: "Function" },
     copyWithin: { type: "Function", return: { type } },
@@ -1027,5 +1071,6 @@ function buildTypedArrayPrototypeTypeInfo(
     // Symbols
     [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
     [Symbol.toStringTag]: { type: "String" },
+    ...otherProperties,
   };
 }

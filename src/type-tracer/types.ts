@@ -216,3 +216,6 @@ export type MathProperty = Exclude<keyof typeof Math, ExcludeProperty>;
 export type ErrorProperty =
   | Exclude<keyof typeof Error, ExcludeProperty | "prepareStackTrace">
   | "isError";
+export type AtomicsProperty =
+  | Exclude<keyof typeof Atomics, ExcludeProperty>
+  | "pause";
