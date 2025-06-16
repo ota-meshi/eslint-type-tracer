@@ -19,47 +19,47 @@ function fn<X extends any[]>(
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "[]": Array [
+        "Array",
+      ],
+      "a": Array [
+        "Array",
+      ],
+    },
     "expr": "target([], a)",
-    "types": Array [
-      Array [
-        "Array",
-      ],
-      Array [
-        "Array",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "Array",
+      ],
+      "b": Array [
+        "Array",
+      ],
+      "c": Array [
+        "Array",
+      ],
+      "d": Array [
+        "Array",
+      ],
+    },
     "expr": "target(a, b, c, d)",
-    "types": Array [
-      Array [
-        "Array",
-      ],
-      Array [
-        "Array",
-      ],
-      Array [
-        "Array",
-      ],
-      Array [
-        "Array",
-      ],
-    ],
   },
   Object {
-    "expr": "target(a[0], b[0], c[0], d[0])",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a[0]": Array [
         "Number",
       ],
-      Array [
+      "b[0]": Array [
         "Number",
       ],
-      Array [],
-      Array [
+      "c[0]": Array [],
+      "d[0]": Array [
         "String",
       ],
-    ],
+    },
+    "expr": "target(a[0], b[0], c[0], d[0])",
   },
 ]
 `;
@@ -76,26 +76,26 @@ function fn<X extends 2n>(a: bigint, b: number, c: X): void {
  1`] = `
 Array [
   Object {
-    "expr": "target(a)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a": Array [
         "BigInt",
       ],
-    ],
+    },
+    "expr": "target(a)",
   },
   Object {
+    "args": Object {
+      "BigInt(b)": Array [
+        "BigInt",
+      ],
+      "a": Array [
+        "BigInt",
+      ],
+      "c": Array [
+        "BigInt",
+      ],
+    },
     "expr": "target(a, BigInt(b), c)",
-    "types": Array [
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
 ]
 `;
@@ -112,26 +112,26 @@ function fn<X extends true>(a: boolean, b: false, c: X): void {
  1`] = `
 Array [
   Object {
-    "expr": "target(a)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a": Array [
         "Boolean",
       ],
-    ],
+    },
+    "expr": "target(a)",
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "Boolean",
+      ],
+      "b": Array [
+        "Boolean",
+      ],
+      "c": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(a, b, c)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-      Array [
-        "Boolean",
-      ],
-      Array [
-        "Boolean",
-      ],
-    ],
   },
 ]
 `;
@@ -212,133 +212,133 @@ function _9() {
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "String": Array [
+        "Function",
+      ],
+      "fn": Array [
+        "Function",
+      ],
+    },
     "expr": "target(fn, String)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "Function",
+      ],
+      "b": Array [
+        "Function",
+      ],
+      "c": Array [
+        "Function",
+      ],
+    },
     "expr": "target(a, b, c)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-      Array [
-        "Function",
-      ],
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "function fn() {}": Array [
+        "Function",
+      ],
+    },
     "expr": "target(function fn() {})",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "() => {}": Array [
+        "Function",
+      ],
+    },
     "expr": "target(() => {})",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo": Array [
+        "Function",
+      ],
+    },
     "expr": "target(foo)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo": Array [
+        "Function",
+      ],
+    },
     "expr": "target(foo)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo": Array [
+        "Function",
+      ],
+    },
     "expr": "target(foo)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "Function",
+      ],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo.fn": Array [
+        "Function",
+      ],
+    },
     "expr": "target(foo.fn)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Object.assign": Array [
+        "Function",
+      ],
+    },
     "expr": "target(Object.assign)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo.fn": Array [
+        "Function",
+      ],
+    },
     "expr": "target(foo.fn)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo": Array [
+        "Function",
+      ],
+    },
     "expr": "target(foo)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo": Array [
+        "Function",
+      ],
+    },
     "expr": "target(foo)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
-    "expr": "target(a)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a": Array [
         "Function",
       ],
-    ],
+    },
+    "expr": "target(a)",
   },
   Object {
-    "expr": "target(a)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a": Array [
         "Function",
       ],
-    ],
+    },
+    "expr": "target(a)",
   },
 ]
 `;
@@ -353,23 +353,23 @@ function fn<X extends Intl.Segmenter>(a: Intl.Segmenter, b: X): void {
  1`] = `
 Array [
   Object {
-    "expr": "target(new Intl.Segmenter())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.Segmenter()": Array [
         "Intl.Segmenter",
       ],
-    ],
+    },
+    "expr": "target(new Intl.Segmenter())",
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "Intl.Segmenter",
+      ],
+      "b": Array [
+        "Intl.Segmenter",
+      ],
+    },
     "expr": "target(a, b)",
-    "types": Array [
-      Array [
-        "Intl.Segmenter",
-      ],
-      Array [
-        "Intl.Segmenter",
-      ],
-    ],
   },
 ]
 `;
@@ -382,10 +382,10 @@ target(a);
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "a": Array [],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [],
-    ],
   },
 ]
 `;
@@ -404,40 +404,40 @@ function fn<X extends "foo">(a: string, b: \`Hello, \${string}\`, c: X): void {
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "a": Array [
+        "String",
+      ],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "String",
+      ],
+      "b": Array [
+        "String",
+      ],
+      "c": Array [
+        "String",
+      ],
+    },
     "expr": "target(a, b, c)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a[0]": Array [
+        "String",
+      ],
+      "b[0]": Array [
+        "String",
+      ],
+      "c[0]": Array [
+        "String",
+      ],
+    },
     "expr": "target(a[0], b[0], c[0])",
-    "types": Array [
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-    ],
   },
 ]
 `;
@@ -454,26 +454,26 @@ function fn<X extends symbol>(a: symbol, b: typeof a, c: X): void {
  1`] = `
 Array [
   Object {
-    "expr": "target(a)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a": Array [
         "Symbol",
       ],
-    ],
+    },
+    "expr": "target(a)",
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "Symbol",
+      ],
+      "b": Array [
+        "Symbol",
+      ],
+      "c": Array [
+        "Symbol",
+      ],
+    },
     "expr": "target(a, b, c)",
-    "types": Array [
-      Array [
-        "Symbol",
-      ],
-      Array [
-        "Symbol",
-      ],
-      Array [
-        "Symbol",
-      ],
-    ],
   },
 ]
 `;

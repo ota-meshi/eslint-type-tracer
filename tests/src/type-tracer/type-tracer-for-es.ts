@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs";
 import { resolvedBuildTypeTracer } from "./resolved-build-type-tracer.ts";
+import type { TSESTree } from "@typescript-eslint/types";
 
 const FIXTURES_ROOT = path.resolve(
   fileURLToPath(import.meta.url),
@@ -56,7 +57,7 @@ async function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
 
   const result: {
     expr: string;
-    types: (TypeName | null)[];
+    args: Record<string, TypeName[]>;
   }[] = [];
   const linterResult = linter.verify(
     code,
@@ -69,10 +70,17 @@ async function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
               create(context: Rule.RuleContext) {
                 const getType = buildTypeTracer(context.sourceCode);
                 return {
-                  "CallExpression[callee.name = target]"(node) {
+                  "CallExpression[callee.name = target]"(
+                    node: TSESTree.CallExpression,
+                  ) {
                     result.push({
                       expr: context.sourceCode.getText(node),
-                      types: node.arguments.map(getType),
+                      args: Object.fromEntries(
+                        node.arguments.map((n) => [
+                          context.sourceCode.getText(n),
+                          getType(n),
+                        ]),
+                      ),
                     });
                   },
                 };

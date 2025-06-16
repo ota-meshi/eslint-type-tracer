@@ -9,28 +9,28 @@ target(a[Symbol.iterator]());
  1`] = `
 Array [
   Object {
-    "expr": "target(a)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a": Array [
         "Array",
       ],
-    ],
+    },
+    "expr": "target(a)",
   },
   Object {
-    "expr": "target(a[Symbol.iterator])",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a[Symbol.iterator]": Array [
         "Function",
       ],
-    ],
+    },
+    "expr": "target(a[Symbol.iterator])",
   },
   Object {
-    "expr": "target(a[Symbol.iterator]())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a[Symbol.iterator]()": Array [
         "Iterator",
       ],
-    ],
+    },
+    "expr": "target(a[Symbol.iterator]())",
   },
 ]
 `;
@@ -77,142 +77,175 @@ function _3() {
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "foo -= 42": Array [
+        "Number",
+      ],
+      "foo -= 42n": Array [
+        "BigInt",
+      ],
+      "foo -= bar": Array [],
+    },
     "expr": "target((foo -= bar), (foo -= 42), (foo -= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo *= 42": Array [
+        "Number",
+      ],
+      "foo *= 42n": Array [
+        "BigInt",
+      ],
+      "foo *= bar": Array [],
+    },
     "expr": "target((foo *= bar), (foo *= 42), (foo *= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo /= 42": Array [
+        "Number",
+      ],
+      "foo /= 42n": Array [
+        "BigInt",
+      ],
+      "foo /= bar": Array [],
+    },
     "expr": "target((foo /= bar), (foo /= 42), (foo /= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo %= 42": Array [
+        "Number",
+      ],
+      "foo %= 42n": Array [
+        "BigInt",
+      ],
+      "foo %= bar": Array [],
+    },
     "expr": "target((foo %= bar), (foo %= 42), (foo %= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo ^= 42": Array [
+        "Number",
+      ],
+      "foo ^= 42n": Array [
+        "BigInt",
+      ],
+      "foo ^= bar": Array [],
+    },
     "expr": "target((foo ^= bar), (foo ^= 42), (foo ^= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo **= 42": Array [
+        "Number",
+      ],
+      "foo **= 42n": Array [
+        "BigInt",
+      ],
+      "foo **= bar": Array [],
+    },
     "expr": "target((foo **= bar), (foo **= 42), (foo **= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo &= 42": Array [
+        "Number",
+      ],
+      "foo &= 42n": Array [
+        "BigInt",
+      ],
+      "foo &= bar": Array [],
+    },
     "expr": "target((foo &= bar), (foo &= 42), (foo &= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo |= 42": Array [
+        "Number",
+      ],
+      "foo |= 42n": Array [
+        "BigInt",
+      ],
+      "foo |= bar": Array [],
+    },
     "expr": "target((foo |= bar), (foo |= 42), (foo |= 42n))",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a &&= b": Array [
+        "Number",
+      ],
+      "c &&= d": Array [
+        "BigInt",
+      ],
+      "foo &&= 42": Array [],
+      "foo &&= 42n": Array [],
+      "foo &&= bar": Array [],
+    },
     "expr": "target((a &&= b), (c &&= d), (foo &&= bar), (foo &&= 42), (foo &&= 42n))",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [],
-      Array [],
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "a ||= b": Array [
+        "Number",
+      ],
+      "c ||= d": Array [
+        "BigInt",
+      ],
+      "foo ||= 42": Array [],
+      "foo ||= 42n": Array [],
+      "foo ||= bar": Array [],
+    },
     "expr": "target((a ||= b), (c ||= d), (foo ||= bar), (foo ||= 42), (foo ||= 42n))",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [],
-      Array [],
-      Array [],
-    ],
   },
   Object {
-    "expr": "target((a ??= b), (c ??= d), (foo ??= bar), (foo ??= 42), (foo ??= 42n))",
-    "types": Array [
-      Array [
+    "args": Object {
+      "a ??= b": Array [
         "Number",
       ],
-      Array [
+      "c ??= d": Array [
         "BigInt",
       ],
-      Array [],
-      Array [],
-      Array [],
-    ],
+      "foo ??= 42": Array [],
+      "foo ??= 42n": Array [],
+      "foo ??= bar": Array [],
+    },
+    "expr": "target((a ??= b), (c ??= d), (foo ??= bar), (foo ??= 42), (foo ??= 42n))",
+  },
+]
+`;
+
+exports[`type-tracer-for-es buildTypeTracerForES atomics.js target(
+  Atomics.add(x),
+  Atomics.waitAsync(x),
+  Atomics.waitAsync(x).async,
+  Atomics[Symbol.toStringTag],
+);
+ 1`] = `
+Array [
+  Object {
+    "args": Object {
+      "Atomics.add(x)": Array [
+        "Number",
+      ],
+      "Atomics.waitAsync(x)": Array [
+        "Object",
+      ],
+      "Atomics.waitAsync(x).async": Array [
+        "Boolean",
+      ],
+      "Atomics[Symbol.toStringTag]": Array [
+        "String",
+      ],
+    },
+    "expr": "target(
+  Atomics.add(x),
+  Atomics.waitAsync(x),
+  Atomics.waitAsync(x).async,
+  Atomics[Symbol.toStringTag],
+)",
   },
 ]
 `;
@@ -251,212 +284,212 @@ target(foo | bar, 42 | bar, foo | 42, 42n | bar, foo | 42n);
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "foo == bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo == bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo != bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo != bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo === bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo === bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo !== bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo !== bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo < bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo < bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo <= bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo <= bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo > bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo > bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo >= bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(foo >= bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 - bar": Array [
+        "Number",
+      ],
+      "42n - bar": Array [
+        "BigInt",
+      ],
+      "foo - 42": Array [
+        "Number",
+      ],
+      "foo - 42n": Array [
+        "BigInt",
+      ],
+      "foo - bar": Array [],
+    },
     "expr": "target(foo - bar, 42 - bar, foo - 42, 42n - bar, foo - 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 * bar": Array [
+        "Number",
+      ],
+      "42n * bar": Array [
+        "BigInt",
+      ],
+      "foo * 42": Array [
+        "Number",
+      ],
+      "foo * 42n": Array [
+        "BigInt",
+      ],
+      "foo * bar": Array [],
+    },
     "expr": "target(foo * bar, 42 * bar, foo * 42, 42n * bar, foo * 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 / bar": Array [
+        "Number",
+      ],
+      "42n / bar": Array [
+        "BigInt",
+      ],
+      "foo / 42": Array [
+        "Number",
+      ],
+      "foo / 42n": Array [
+        "BigInt",
+      ],
+      "foo / bar": Array [],
+    },
     "expr": "target(foo / bar, 42 / bar, foo / 42, 42n / bar, foo / 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 % bar": Array [
+        "Number",
+      ],
+      "42n % bar": Array [
+        "BigInt",
+      ],
+      "foo % 42": Array [
+        "Number",
+      ],
+      "foo % 42n": Array [
+        "BigInt",
+      ],
+      "foo % bar": Array [],
+    },
     "expr": "target(foo % bar, 42 % bar, foo % 42, 42n % bar, foo % 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 ^ bar": Array [
+        "Number",
+      ],
+      "42n ^ bar": Array [
+        "BigInt",
+      ],
+      "foo ^ 42": Array [
+        "Number",
+      ],
+      "foo ^ 42n": Array [
+        "BigInt",
+      ],
+      "foo ^ bar": Array [],
+    },
     "expr": "target(foo ^ bar, 42 ^ bar, foo ^ 42, 42n ^ bar, foo ^ 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 ** bar": Array [
+        "Number",
+      ],
+      "42n ** bar": Array [
+        "BigInt",
+      ],
+      "foo ** 42": Array [
+        "Number",
+      ],
+      "foo ** 42n": Array [
+        "BigInt",
+      ],
+      "foo ** bar": Array [],
+    },
     "expr": "target(foo ** bar, 42 ** bar, foo ** 42, 42n ** bar, foo ** 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 & bar": Array [
+        "Number",
+      ],
+      "42n & bar": Array [
+        "BigInt",
+      ],
+      "foo & 42": Array [
+        "Number",
+      ],
+      "foo & 42n": Array [
+        "BigInt",
+      ],
+      "foo & bar": Array [],
+    },
     "expr": "target(foo & bar, 42 & bar, foo & 42, 42n & bar, foo & 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "42 | bar": Array [
+        "Number",
+      ],
+      "42n | bar": Array [
+        "BigInt",
+      ],
+      "foo | 42": Array [
+        "Number",
+      ],
+      "foo | 42n": Array [
+        "BigInt",
+      ],
+      "foo | bar": Array [],
+    },
     "expr": "target(foo | bar, 42 | bar, foo | 42, 42n | bar, foo | 42n)",
-    "types": Array [
-      Array [],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
 ]
 `;
@@ -475,52 +508,52 @@ target((foo >>>= bar));
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "foo << bar": Array [
+        "Number",
+      ],
+    },
     "expr": "target(foo << bar)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo >> bar": Array [
+        "Number",
+      ],
+    },
     "expr": "target(foo >> bar)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo >>> bar": Array [
+        "Number",
+      ],
+    },
     "expr": "target(foo >>> bar)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo <<= bar": Array [
+        "Number",
+      ],
+    },
     "expr": "target((foo <<= bar))",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "foo >>= bar": Array [
+        "Number",
+      ],
+    },
     "expr": "target((foo >>= bar))",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
-    "expr": "target((foo >>>= bar))",
-    "types": Array [
-      Array [
+    "args": Object {
+      "foo >>>= bar": Array [
         "Number",
       ],
-    ],
+    },
+    "expr": "target((foo >>>= bar))",
   },
 ]
 `;
@@ -607,354 +640,354 @@ target(new BigUint64Array());
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "String()": Array [
+        "String",
+      ],
+      "String\`\`": Array [
+        "String",
+      ],
+    },
     "expr": "target(String(), String\`\`)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Number()": Array [
+        "Number",
+      ],
+      "Number\`\`": Array [
+        "Number",
+      ],
+    },
     "expr": "target(Number(), Number\`\`)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "BigInt()": Array [
+        "BigInt",
+      ],
+      "BigInt\`\`": Array [
+        "BigInt",
+      ],
+    },
     "expr": "target(BigInt(), BigInt\`\`)",
-    "types": Array [
-      Array [
-        "BigInt",
-      ],
-      Array [
-        "BigInt",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Boolean()": Array [
+        "Boolean",
+      ],
+      "Boolean\`\`": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(Boolean(), Boolean\`\`)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Symbol()": Array [
+        "Symbol",
+      ],
+      "Symbol\`\`": Array [
+        "Symbol",
+      ],
+    },
     "expr": "target(Symbol(), Symbol\`\`)",
-    "types": Array [
-      Array [
-        "Symbol",
-      ],
-      Array [
-        "Symbol",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Object()": Array [
+        "Object",
+      ],
+      "Object\`\`": Array [
+        "Object",
+      ],
+    },
     "expr": "target(Object(), Object\`\`)",
-    "types": Array [
-      Array [
-        "Object",
-      ],
-      Array [
-        "Object",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Array\`\`": Array [
+        "Array",
+      ],
+      "[]": Array [
+        "Array",
+      ],
+    },
     "expr": "target([], Array\`\`)",
-    "types": Array [
-      Array [
-        "Array",
-      ],
-      Array [
-        "Array",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Function()": Array [
+        "Function",
+      ],
+      "Function\`\`": Array [
+        "Function",
+      ],
+    },
     "expr": "target(Function(), Function\`\`)",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "RegExp()": Array [
+        "RegExp",
+      ],
+      "RegExp\`\`": Array [
+        "RegExp",
+      ],
+    },
     "expr": "target(RegExp(), RegExp\`\`)",
-    "types": Array [
-      Array [
-        "RegExp",
-      ],
-      Array [
-        "RegExp",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Date()": Array [
+        "Date",
+      ],
+      "Date\`\`": Array [
+        "Date",
+      ],
+    },
     "expr": "target(Date(), Date\`\`)",
-    "types": Array [
-      Array [
-        "Date",
-      ],
-      Array [
-        "Date",
-      ],
-    ],
   },
   Object {
-    "expr": "target(new String())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new String()": Array [
         "String",
       ],
-    ],
+    },
+    "expr": "target(new String())",
   },
   Object {
-    "expr": "target(new Number())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Number()": Array [
         "Number",
       ],
-    ],
+    },
+    "expr": "target(new Number())",
   },
   Object {
-    "expr": "target(new BigInt())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new BigInt()": Array [
         "BigInt",
       ],
-    ],
+    },
+    "expr": "target(new BigInt())",
   },
   Object {
-    "expr": "target(new Boolean())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Boolean()": Array [
         "Boolean",
       ],
-    ],
+    },
+    "expr": "target(new Boolean())",
   },
   Object {
-    "expr": "target(new Symbol())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Symbol()": Array [
         "Symbol",
       ],
-    ],
+    },
+    "expr": "target(new Symbol())",
   },
   Object {
-    "expr": "target(new Object())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Object()": Array [
         "Object",
       ],
-    ],
+    },
+    "expr": "target(new Object())",
   },
   Object {
-    "expr": "target(new Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Array()": Array [
         "Array",
       ],
-    ],
+    },
+    "expr": "target(new Array())",
   },
   Object {
-    "expr": "target(new Function())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Function()": Array [
         "Function",
       ],
-    ],
+    },
+    "expr": "target(new Function())",
   },
   Object {
-    "expr": "target(new RegExp())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new RegExp()": Array [
         "RegExp",
       ],
-    ],
+    },
+    "expr": "target(new RegExp())",
   },
   Object {
-    "expr": "target(new Date())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Date()": Array [
         "Date",
       ],
-    ],
+    },
+    "expr": "target(new Date())",
   },
   Object {
-    "expr": "target(new Promise())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Promise()": Array [
         "Promise",
       ],
-    ],
+    },
+    "expr": "target(new Promise())",
   },
   Object {
-    "expr": "target(new Intl.Collator())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.Collator()": Array [
         "Intl.Collator",
       ],
-    ],
+    },
+    "expr": "target(new Intl.Collator())",
   },
   Object {
-    "expr": "target(new Intl.DateTimeFormat())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.DateTimeFormat()": Array [
         "Intl.DateTimeFormat",
       ],
-    ],
+    },
+    "expr": "target(new Intl.DateTimeFormat())",
   },
   Object {
-    "expr": "target(new Intl.ListFormat())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.ListFormat()": Array [
         "Intl.ListFormat",
       ],
-    ],
+    },
+    "expr": "target(new Intl.ListFormat())",
   },
   Object {
-    "expr": "target(new Intl.NumberFormat())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.NumberFormat()": Array [
         "Intl.NumberFormat",
       ],
-    ],
+    },
+    "expr": "target(new Intl.NumberFormat())",
   },
   Object {
-    "expr": "target(new Intl.PluralRules())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.PluralRules()": Array [
         "Intl.PluralRules",
       ],
-    ],
+    },
+    "expr": "target(new Intl.PluralRules())",
   },
   Object {
-    "expr": "target(new Intl.RelativeTimeFormat())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.RelativeTimeFormat()": Array [
         "Intl.RelativeTimeFormat",
       ],
-    ],
+    },
+    "expr": "target(new Intl.RelativeTimeFormat())",
   },
   Object {
-    "expr": "target(new Intl.Segmenter())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Intl.Segmenter()": Array [
         "Intl.Segmenter",
       ],
-    ],
+    },
+    "expr": "target(new Intl.Segmenter())",
   },
   Object {
-    "expr": "target(new Int8Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Int8Array()": Array [
         "Int8Array",
       ],
-    ],
+    },
+    "expr": "target(new Int8Array())",
   },
   Object {
-    "expr": "target(new Uint8Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Uint8Array()": Array [
         "Uint8Array",
       ],
-    ],
+    },
+    "expr": "target(new Uint8Array())",
   },
   Object {
-    "expr": "target(new Uint8ClampedArray())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Uint8ClampedArray()": Array [
         "Uint8ClampedArray",
       ],
-    ],
+    },
+    "expr": "target(new Uint8ClampedArray())",
   },
   Object {
-    "expr": "target(new Int16Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Int16Array()": Array [
         "Int16Array",
       ],
-    ],
+    },
+    "expr": "target(new Int16Array())",
   },
   Object {
-    "expr": "target(new Uint16Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Uint16Array()": Array [
         "Uint16Array",
       ],
-    ],
+    },
+    "expr": "target(new Uint16Array())",
   },
   Object {
-    "expr": "target(new Int32Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Int32Array()": Array [
         "Int32Array",
       ],
-    ],
+    },
+    "expr": "target(new Int32Array())",
   },
   Object {
-    "expr": "target(new Uint32Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Uint32Array()": Array [
         "Uint32Array",
       ],
-    ],
+    },
+    "expr": "target(new Uint32Array())",
   },
   Object {
-    "expr": "target(new Float16Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Float16Array()": Array [
         "Float16Array",
       ],
-    ],
+    },
+    "expr": "target(new Float16Array())",
   },
   Object {
-    "expr": "target(new Float32Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Float32Array()": Array [
         "Float32Array",
       ],
-    ],
+    },
+    "expr": "target(new Float32Array())",
   },
   Object {
-    "expr": "target(new Float64Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new Float64Array()": Array [
         "Float64Array",
       ],
-    ],
+    },
+    "expr": "target(new Float64Array())",
   },
   Object {
-    "expr": "target(new BigInt64Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new BigInt64Array()": Array [
         "BigInt64Array",
       ],
-    ],
+    },
+    "expr": "target(new BigInt64Array())",
   },
   Object {
-    "expr": "target(new BigUint64Array())",
-    "types": Array [
-      Array [
+    "args": Object {
+      "new BigUint64Array()": Array [
         "BigUint64Array",
       ],
-    ],
+    },
+    "expr": "target(new BigUint64Array())",
   },
 ]
 `;
@@ -1009,6 +1042,19 @@ function _3() {
  1`] = `
 Array [
   Object {
+    "args": Object {
+      "42 && bar": Array [],
+      "42n && bar": Array [],
+      "a && b": Array [
+        "Number",
+      ],
+      "c && d": Array [
+        "BigInt",
+      ],
+      "foo && 42": Array [],
+      "foo && 42n": Array [],
+      "foo && bar": Array [],
+    },
     "expr": "target(
     a && b,
     c && d,
@@ -1018,21 +1064,21 @@ Array [
     42n && bar,
     foo && 42n,
   )",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [],
-      Array [],
-      Array [],
-      Array [],
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "42 || bar": Array [],
+      "42n || bar": Array [],
+      "a || b": Array [
+        "Number",
+      ],
+      "c || d": Array [
+        "BigInt",
+      ],
+      "foo || 42": Array [],
+      "foo || 42n": Array [],
+      "foo || bar": Array [],
+    },
     "expr": "target(
     a || b,
     c || d,
@@ -1042,21 +1088,21 @@ Array [
     42n || bar,
     foo || 42n,
   )",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [],
-      Array [],
-      Array [],
-      Array [],
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "42 ?? bar": Array [],
+      "42n ?? bar": Array [],
+      "a ?? b": Array [
+        "Number",
+      ],
+      "c ?? d": Array [
+        "BigInt",
+      ],
+      "foo ?? 42": Array [],
+      "foo ?? 42n": Array [],
+      "foo ?? bar": Array [],
+    },
     "expr": "target(
     a ?? b,
     c ?? d,
@@ -1066,19 +1112,6 @@ Array [
     42n ?? bar,
     foo ?? 42n,
   )",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [],
-      Array [],
-      Array [],
-      Array [],
-      Array [],
-    ],
   },
 ]
 `;
@@ -1263,215 +1296,242 @@ function _29() {
  1`] = `
 Array [
   Object {
-    "expr": "target(\\"foo\\")",
-    "types": Array [
-      Array [
+    "args": Object {
+      "\\"foo\\"": Array [
         "String",
       ],
-    ],
+    },
+    "expr": "target(\\"foo\\")",
   },
   Object {
-    "expr": "target(42)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "42": Array [
         "Number",
       ],
-    ],
+    },
+    "expr": "target(42)",
   },
   Object {
-    "expr": "target(true)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "true": Array [
         "Boolean",
       ],
-    ],
+    },
+    "expr": "target(true)",
   },
   Object {
-    "expr": "target(/foo/)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "/foo/": Array [
         "RegExp",
       ],
-    ],
+    },
+    "expr": "target(/foo/)",
   },
   Object {
-    "expr": "target(null)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "null": Array [
         "null",
       ],
-    ],
+    },
+    "expr": "target(null)",
   },
   Object {
-    "expr": "target(42n)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "42n": Array [
         "BigInt",
       ],
-    ],
+    },
+    "expr": "target(42n)",
   },
   Object {
-    "expr": "target([])",
-    "types": Array [
-      Array [
+    "args": Object {
+      "[]": Array [
         "Array",
       ],
-    ],
+    },
+    "expr": "target([])",
   },
   Object {
-    "expr": "target({})",
-    "types": Array [
-      Array [
+    "args": Object {
+      "{}": Array [
         "Object",
       ],
-    ],
+    },
+    "expr": "target({})",
   },
   Object {
+    "args": Object {
+      "function () {}": Array [
+        "Function",
+      ],
+    },
     "expr": "target(function () {})",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "() => {}": Array [
+        "Function",
+      ],
+    },
     "expr": "target(() => {})",
-    "types": Array [
-      Array [
-        "Function",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "NaN": Array [
+        "Number",
+      ],
+    },
     "expr": "target(NaN)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Infinity": Array [
+        "Number",
+      ],
+    },
     "expr": "target(Infinity)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
-    "expr": "target(undefined)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "undefined": Array [
         "undefined",
       ],
-    ],
+    },
+    "expr": "target(undefined)",
   },
   Object {
+    "args": Object {
+      "\`foo\`": Array [
+        "String",
+      ],
+    },
     "expr": "target(\`foo\`)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "\`foo\${a}\`": Array [
+        "String",
+      ],
+    },
     "expr": "target(\`foo\${a}\`)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [
+        "String",
+      ],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
-    "expr": "target(f)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "f": Array [
         "Function",
       ],
-    ],
+    },
+    "expr": "target(f)",
   },
   Object {
+    "args": Object {
+      "a": Array [],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "a": Array [],
+      "b": Array [
+        "String",
+      ],
+    },
     "expr": "target(a, b)",
-    "types": Array [
-      Array [],
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "\\"foo\\" + \\"bar\\"": Array [
+        "String",
+      ],
+    },
     "expr": "target(\\"foo\\" + \\"bar\\")",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "a + \\"foo\\"": Array [
+        "String",
+      ],
+    },
     "expr": "target(a + \\"foo\\")",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "\\"foo\\" + a + \\"bar\\"": Array [
+        "String",
+      ],
+    },
     "expr": "target(\\"foo\\" + a + \\"bar\\")",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "b + \\"bar\\"": Array [
+        "String",
+      ],
+    },
     "expr": "target(b + \\"bar\\")",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "\\"foo\\" + a + b": Array [
+        "String",
+      ],
+    },
     "expr": "target(\\"foo\\" + a + b)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "\\"bar\\" + foo": Array [
+        "String",
+      ],
+      "42 + a": Array [
+        "Number",
+      ],
+      "42 + foo": Array [],
+      "42 + null": Array [
+        "Number",
+      ],
+      "42 + {}": Array [
+        "String",
+      ],
+      "42n + foo": Array [
+        "BigInt",
+      ],
+      "a + \\"bar\\"": Array [
+        "String",
+      ],
+      "foo + \\"bar\\"": Array [
+        "String",
+      ],
+      "{} + 42": Array [
+        "Number",
+      ],
+    },
     "expr": "target(
     a + \\"bar\\",
     foo + \\"bar\\",
@@ -1483,227 +1543,277 @@ Array [
     42n + foo,
     42 + foo,
   )",
-    "types": Array [
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-      Array [
-        "String",
-      ],
-      Array [
-        "BigInt",
-      ],
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "b += \\"bar\\"": Array [
+        "String",
+      ],
+    },
     "expr": "target((b += \\"bar\\"))",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "b = \\"bar\\"": Array [
+        "String",
+      ],
+    },
     "expr": "target((b = \\"bar\\"))",
-    "types": Array [
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "!foo": Array [
+        "Boolean",
+      ],
+      "delete foo.bar": Array [
+        "Boolean",
+      ],
+    },
     "expr": "target(!foo, delete foo.bar)",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-      Array [
-        "Boolean",
-      ],
-    ],
   },
   Object {
-    "expr": "target(+bar)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "+bar": Array [
         "Number",
       ],
-    ],
+    },
+    "expr": "target(+bar)",
   },
   Object {
-    "expr": "target(typeof bar, void bar)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "typeof bar": Array [
         "String",
       ],
-      Array [
+      "void bar": Array [
         "undefined",
       ],
-    ],
+    },
+    "expr": "target(typeof bar, void bar)",
   },
   Object {
-    "expr": "target((foo, \\"bar\\"))",
-    "types": Array [
-      Array [
+    "args": Object {
+      "foo, \\"bar\\"": Array [
         "String",
       ],
-    ],
+    },
+    "expr": "target((foo, \\"bar\\"))",
   },
   Object {
-    "expr": "target(class Foo {})",
-    "types": Array [
-      Array [
+    "args": Object {
+      "class Foo {}": Array [
         "Function",
       ],
-    ],
+    },
+    "expr": "target(class Foo {})",
   },
   Object {
+    "args": Object {
+      "a ? \\"a\\" : \\"b\\"": Array [
+        "String",
+      ],
+      "a ? \\"a\\" : 42": Array [],
+    },
     "expr": "target(a ? \\"a\\" : \\"b\\", a ? \\"a\\" : 42)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "--a": Array [
+        "Number",
+      ],
+      "a++": Array [
+        "Number",
+      ],
+    },
     "expr": "target(a++, --a)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "\\"\\".length": Array [
+        "Number",
+      ],
+    },
     "expr": "target(\\"\\".length)",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "String.fromCharCode(42)": Array [
+        "String",
+      ],
+      "String.fromCodePoint(42)": Array [
+        "String",
+      ],
+      "String.raw\`\`": Array [
+        "String",
+      ],
+    },
     "expr": "target(String.fromCharCode(42), String.fromCodePoint(42), String.raw\`\`)",
-    "types": Array [
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-      Array [
-        "String",
-      ],
-    ],
   },
   Object {
-    "expr": "target(promise, resolve, reject)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "promise": Array [
         "Promise",
       ],
-      Array [
+      "reject": Array [
         "Function",
       ],
-      Array [
+      "resolve": Array [
         "Function",
       ],
-    ],
+    },
+    "expr": "target(promise, resolve, reject)",
   },
   Object {
-    "expr": "target(r)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "r": Array [
         "String",
       ],
-    ],
+    },
+    "expr": "target(r)",
   },
   Object {
-    "expr": "target(array)",
-    "types": Array [
-      Array [
+    "args": Object {
+      "array": Array [
         "Array",
       ],
-    ],
-  },
-  Object {
+    },
     "expr": "target(array)",
-    "types": Array [
-      Array [],
-    ],
   },
   Object {
+    "args": Object {
+      "array": Array [],
+    },
+    "expr": "target(array)",
+  },
+  Object {
+    "args": Object {
+      "a": Array [
+        "Number",
+      ],
+    },
     "expr": "target(a)",
-    "types": Array [
-      Array [
+  },
+  Object {
+    "args": Object {
+      "a(foo)": Array [
+        "Boolean",
+      ],
+    },
+    "expr": "target(a(foo))",
+  },
+  Object {
+    "args": Object {
+      "a(foo)": Array [],
+    },
+    "expr": "target(a(foo))",
+  },
+  Object {
+    "args": Object {
+      "a(foo)": Array [
+        "Boolean",
+      ],
+    },
+    "expr": "target(a(foo))",
+  },
+  Object {
+    "args": Object {
+      "Math.max(1, 2)": Array [
         "Number",
       ],
-    ],
-  },
-  Object {
-    "expr": "target(a(foo))",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
-  },
-  Object {
-    "expr": "target(a(foo))",
-    "types": Array [
-      Array [],
-    ],
-  },
-  Object {
-    "expr": "target(a(foo))",
-    "types": Array [
-      Array [
-        "Boolean",
-      ],
-    ],
-  },
-  Object {
+    },
     "expr": "target(Math.max(1, 2))",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
+    "args": Object {
+      "Math.fround(5)": Array [
+        "Number",
+      ],
+    },
     "expr": "target(Math.fround(5))",
-    "types": Array [
-      Array [
-        "Number",
-      ],
-    ],
   },
   Object {
-    "expr": "target(Math.f16round(5))",
-    "types": Array [
-      Array [
+    "args": Object {
+      "Math.f16round(5)": Array [
         "Number",
       ],
-    ],
+    },
+    "expr": "target(Math.f16round(5))",
+  },
+]
+`;
+
+exports[`type-tracer-for-es buildTypeTracerForES uint8array.js target(Uint8Array.fromBase64, Uint8Array.fromHex);
+
+const u = new Uint8Array(10);
+target(
+  u,
+  u.at,
+  u.fill(),
+  u[Symbol.toStringTag],
+  u.toBase64,
+  u.toHex,
+  u.setFromBase64,
+  u.setFromHex,
+  u.toBase64(),
+  u.toHex(),
+);
+ 1`] = `
+Array [
+  Object {
+    "args": Object {
+      "Uint8Array.fromBase64": Array [
+        "Function",
+      ],
+      "Uint8Array.fromHex": Array [
+        "Function",
+      ],
+    },
+    "expr": "target(Uint8Array.fromBase64, Uint8Array.fromHex)",
+  },
+  Object {
+    "args": Object {
+      "u": Array [
+        "Uint8Array",
+      ],
+      "u.at": Array [
+        "Function",
+      ],
+      "u.fill()": Array [
+        "Uint8Array",
+      ],
+      "u.setFromBase64": Array [
+        "Function",
+      ],
+      "u.setFromHex": Array [
+        "Function",
+      ],
+      "u.toBase64": Array [
+        "Function",
+      ],
+      "u.toBase64()": Array [
+        "String",
+      ],
+      "u.toHex": Array [
+        "Function",
+      ],
+      "u.toHex()": Array [
+        "String",
+      ],
+      "u[Symbol.toStringTag]": Array [
+        "String",
+      ],
+    },
+    "expr": "target(
+  u,
+  u.at,
+  u.fill(),
+  u[Symbol.toStringTag],
+  u.toBase64,
+  u.toHex,
+  u.setFromBase64,
+  u.setFromHex,
+  u.toBase64(),
+  u.toHex(),
+)",
   },
 ]
 `;
@@ -1714,28 +1824,28 @@ target(~foo, ~42, ~42n);
  1`] = `
 Array [
   Object {
-    "expr": "target(-foo, -42, -42n)",
-    "types": Array [
-      Array [],
-      Array [
+    "args": Object {
+      "-42": Array [
         "Number",
       ],
-      Array [
+      "-42n": Array [
         "BigInt",
       ],
-    ],
+      "-foo": Array [],
+    },
+    "expr": "target(-foo, -42, -42n)",
   },
   Object {
-    "expr": "target(~foo, ~42, ~42n)",
-    "types": Array [
-      Array [],
-      Array [
+    "args": Object {
+      "~42": Array [
         "Number",
       ],
-      Array [
+      "~42n": Array [
         "BigInt",
       ],
-    ],
+      "~foo": Array [],
+    },
+    "expr": "target(~foo, ~42, ~42n)",
   },
 ]
 `;

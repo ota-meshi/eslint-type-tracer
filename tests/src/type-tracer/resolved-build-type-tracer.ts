@@ -11,11 +11,11 @@ const libIndexPath = path.resolve(
 );
 
 let buildTypeTracer:
-  | ((sourceCode: SourceCode) => (node: TSESTree.Node) => TypeName[] | null)
+  | ((sourceCode: SourceCode) => (node: TSESTree.Node) => TypeName[])
   | undefined;
 
 export async function resolvedBuildTypeTracer(): Promise<
-  (sourceCode: SourceCode) => (node: TSESTree.Node) => TypeName[] | null
+  (sourceCode: SourceCode) => (node: TSESTree.Node) => TypeName[]
 > {
   if (buildTypeTracer) return buildTypeTracer;
   // eslint-disable-next-line no-process-env -- ignore
