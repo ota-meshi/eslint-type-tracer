@@ -1,5 +1,5 @@
 ---
-"eslint-type-tracer": patch
+"eslint-type-tracer": minor
 ---
 
 feat: add support for  well-known symbols
