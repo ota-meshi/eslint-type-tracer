@@ -1,5 +1,11 @@
 # eslint-type-tracer
 
+## 0.4.1
+
+### Patch Changes
+
+- [#14](https://github.com/ota-meshi/eslint-type-tracer/pull/14) [`c9aeb77`](https://github.com/ota-meshi/eslint-type-tracer/commit/c9aeb77b7293c9d8443915328e06f15fe14f406d) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add support for `Math.sumPrecise()`
+
 ## 0.4.0
 
 ### Minor Changes
