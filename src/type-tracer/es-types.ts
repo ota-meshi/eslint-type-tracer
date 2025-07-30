@@ -490,6 +490,7 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
       sin: { type: "Function", return: { type: "Number" } },
       sinh: { type: "Function", return: { type: "Number" } },
       sqrt: { type: "Function", return: { type: "Number" } },
+      sumPrecise: { type: "Function", return: { type: "Number" } },
       tan: { type: "Function", return: { type: "Number" } },
       tanh: { type: "Function", return: { type: "Number" } },
       trunc: { type: "Function", return: { type: "Number" } },
