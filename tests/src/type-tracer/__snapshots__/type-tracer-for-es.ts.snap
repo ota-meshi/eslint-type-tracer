@@ -558,6 +558,34 @@ Array [
 ]
 `;
 
+exports[`type-tracer-for-es buildTypeTracerForES date.js target(Date.now());
+ 1`] = `
+Array [
+  Object {
+    "args": Object {
+      "Date.now()": Array [
+        "Number",
+      ],
+    },
+    "expr": "target(Date.now())",
+  },
+]
+`;
+
+exports[`type-tracer-for-es buildTypeTracerForES error.js target(Error.isError(a));
+ 1`] = `
+Array [
+  Object {
+    "args": Object {
+      "Error.isError(a)": Array [
+        "Boolean",
+      ],
+    },
+    "expr": "target(Error.isError(a))",
+  },
+]
+`;
+
 exports[`type-tracer-for-es buildTypeTracerForES global-objects.js target(String(), String\`\`);
 
 target(Number(), Number\`\`);
@@ -1126,6 +1154,20 @@ Array [
       ],
     },
     "expr": "target(Math.sumPrecise())",
+  },
+]
+`;
+
+exports[`type-tracer-for-es buildTypeTracerForES regexp.js target(RegExp.escape("foo"));
+ 1`] = `
+Array [
+  Object {
+    "args": Object {
+      "RegExp.escape(\\"foo\\")": Array [
+        "String",
+      ],
+    },
+    "expr": "target(RegExp.escape(\\"foo\\"))",
   },
 ]
 `;

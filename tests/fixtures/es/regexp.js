@@ -1,0 +1,1 @@
+target(RegExp.escape("foo"));

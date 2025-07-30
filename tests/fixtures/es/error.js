@@ -1,0 +1,1 @@
+target(Error.isError(a));

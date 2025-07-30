@@ -58,18 +58,26 @@ import type {
   AtomicsProperty,
 } from "./types";
 
-const RETURN_STRING: TypeInfo = {
+const STRING = { type: "String" } as const;
+const NUMBER = { type: "Number" } as const;
+const BOOLEAN = { type: "Boolean" } as const;
+const BIGINT = { type: "BigInt" } as const;
+const RETURN_STRING = {
   type: "Function",
-  return: { type: "String" },
-};
-const RETURN_NUMBER: TypeInfo = {
+  return: STRING,
+} as const;
+const RETURN_NUMBER = {
   type: "Function",
-  return: { type: "Number" },
-};
-const RETURN_BOOLEAN: TypeInfo = {
+  return: NUMBER,
+} as const;
+const RETURN_BOOLEAN = {
   type: "Function",
-  return: { type: "Boolean" },
-};
+  return: BOOLEAN,
+} as const;
+const RETURN_BIGINT = {
+  type: "Function",
+  return: BIGINT,
+} as const;
 
 export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
   String: {
@@ -85,14 +93,14 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     ...RETURN_NUMBER,
     prototypeType: "Number",
     properties: {
-      EPSILON: { type: "Number" },
-      MAX_SAFE_INTEGER: { type: "Number" },
-      MAX_VALUE: { type: "Number" },
-      MIN_SAFE_INTEGER: { type: "Number" },
-      MIN_VALUE: { type: "Number" },
-      NaN: { type: "Number" },
-      NEGATIVE_INFINITY: { type: "Number" },
-      POSITIVE_INFINITY: { type: "Number" },
+      EPSILON: NUMBER,
+      MAX_SAFE_INTEGER: NUMBER,
+      MAX_VALUE: NUMBER,
+      MIN_SAFE_INTEGER: NUMBER,
+      MIN_VALUE: NUMBER,
+      NaN: NUMBER,
+      NEGATIVE_INFINITY: NUMBER,
+      POSITIVE_INFINITY: NUMBER,
       isFinite: RETURN_BOOLEAN,
       isInteger: RETURN_BOOLEAN,
       isNaN: RETURN_BOOLEAN,
@@ -134,11 +142,11 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
   },
   BigInt: {
     type: "Function",
-    return: { type: "BigInt" },
+    return: BIGINT,
     prototypeType: "BigInt",
     properties: {
-      asIntN: { type: "Function", return: { type: "BigInt" } },
-      asUintN: { type: "Function", return: { type: "BigInt" } },
+      asIntN: RETURN_BIGINT,
+      asUintN: RETURN_BIGINT,
     } satisfies Record<BigIntProperty, TypeInfo | undefined>,
   },
   Object: {
@@ -230,27 +238,27 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     return: { type: "RegExp" },
     prototypeType: "RegExp",
     properties: {
-      escape: { type: "Function", return: { type: "String" } },
+      escape: RETURN_STRING,
 
-      "$&": { type: "String" },
-      "$'": { type: "String" },
-      "$`": { type: "String" },
-      "$+": { type: "String" },
-      $_: { type: "String" },
-      $1: { type: "String" },
-      $2: { type: "String" },
-      $3: { type: "String" },
-      $4: { type: "String" },
-      $5: { type: "String" },
-      $6: { type: "String" },
-      $7: { type: "String" },
-      $8: { type: "String" },
-      $9: { type: "String" },
-      input: { type: "String" },
-      lastMatch: { type: "String" },
-      lastParen: { type: "String" },
-      leftContext: { type: "String" },
-      rightContext: { type: "String" },
+      "$&": STRING,
+      "$'": STRING,
+      "$`": STRING,
+      "$+": STRING,
+      $_: STRING,
+      $1: STRING,
+      $2: STRING,
+      $3: STRING,
+      $4: STRING,
+      $5: STRING,
+      $6: STRING,
+      $7: STRING,
+      $8: STRING,
+      $9: STRING,
+      input: STRING,
+      lastMatch: STRING,
+      lastParen: STRING,
+      leftContext: STRING,
+      rightContext: STRING,
       get [Symbol.species]() {
         return WELLKNOWN_GLOBALS.RegExp;
       },
@@ -261,9 +269,9 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     return: { type: "Date" },
     prototypeType: "Date",
     properties: {
-      now: { type: "Function", return: { type: "Number" } },
-      parse: { type: "Function", return: { type: "Number" } },
-      UTC: { type: "Function", return: { type: "Number" } },
+      now: RETURN_NUMBER,
+      parse: RETURN_NUMBER,
+      UTC: RETURN_NUMBER,
     } satisfies Record<DateProperty, TypeInfo | undefined>,
   },
   Promise: {
@@ -452,57 +460,57 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     >,
   },
   undefined: { type: "undefined" },
-  NaN: { type: "Number" },
-  Infinity: { type: "Number" },
+  NaN: NUMBER,
+  Infinity: NUMBER,
   Math: {
     type: "Object",
     properties: {
-      abs: { type: "Function", return: { type: "Number" } },
-      acos: { type: "Function", return: { type: "Number" } },
-      acosh: { type: "Function", return: { type: "Number" } },
-      asin: { type: "Function", return: { type: "Number" } },
-      asinh: { type: "Function", return: { type: "Number" } },
-      atan: { type: "Function", return: { type: "Number" } },
-      atan2: { type: "Function", return: { type: "Number" } },
-      atanh: { type: "Function", return: { type: "Number" } },
-      cbrt: { type: "Function", return: { type: "Number" } },
-      ceil: { type: "Function", return: { type: "Number" } },
-      clz32: { type: "Function", return: { type: "Number" } },
-      cos: { type: "Function", return: { type: "Number" } },
-      cosh: { type: "Function", return: { type: "Number" } },
-      exp: { type: "Function", return: { type: "Number" } },
-      expm1: { type: "Function", return: { type: "Number" } },
-      f16round: { type: "Function", return: { type: "Number" } },
-      floor: { type: "Function", return: { type: "Number" } },
-      fround: { type: "Function", return: { type: "Number" } },
-      hypot: { type: "Function", return: { type: "Number" } },
-      imul: { type: "Function", return: { type: "Number" } },
-      log: { type: "Function", return: { type: "Number" } },
-      log1p: { type: "Function", return: { type: "Number" } },
-      log10: { type: "Function", return: { type: "Number" } },
-      log2: { type: "Function", return: { type: "Number" } },
-      max: { type: "Function", return: { type: "Number" } },
-      min: { type: "Function", return: { type: "Number" } },
-      pow: { type: "Function", return: { type: "Number" } },
-      random: { type: "Function", return: { type: "Number" } },
-      round: { type: "Function", return: { type: "Number" } },
-      sign: { type: "Function", return: { type: "Number" } },
-      sin: { type: "Function", return: { type: "Number" } },
-      sinh: { type: "Function", return: { type: "Number" } },
-      sqrt: { type: "Function", return: { type: "Number" } },
-      sumPrecise: { type: "Function", return: { type: "Number" } },
-      tan: { type: "Function", return: { type: "Number" } },
-      tanh: { type: "Function", return: { type: "Number" } },
-      trunc: { type: "Function", return: { type: "Number" } },
-      E: { type: "Number" },
-      LN2: { type: "Number" },
-      LN10: { type: "Number" },
-      LOG2E: { type: "Number" },
-      LOG10E: { type: "Number" },
-      PI: { type: "Number" },
-      SQRT1_2: { type: "Number" },
-      SQRT2: { type: "Number" },
-      [Symbol.toStringTag]: { type: "String" },
+      abs: RETURN_NUMBER,
+      acos: RETURN_NUMBER,
+      acosh: RETURN_NUMBER,
+      asin: RETURN_NUMBER,
+      asinh: RETURN_NUMBER,
+      atan: RETURN_NUMBER,
+      atan2: RETURN_NUMBER,
+      atanh: RETURN_NUMBER,
+      cbrt: RETURN_NUMBER,
+      ceil: RETURN_NUMBER,
+      clz32: RETURN_NUMBER,
+      cos: RETURN_NUMBER,
+      cosh: RETURN_NUMBER,
+      exp: RETURN_NUMBER,
+      expm1: RETURN_NUMBER,
+      f16round: RETURN_NUMBER,
+      floor: RETURN_NUMBER,
+      fround: RETURN_NUMBER,
+      hypot: RETURN_NUMBER,
+      imul: RETURN_NUMBER,
+      log: RETURN_NUMBER,
+      log1p: RETURN_NUMBER,
+      log10: RETURN_NUMBER,
+      log2: RETURN_NUMBER,
+      max: RETURN_NUMBER,
+      min: RETURN_NUMBER,
+      pow: RETURN_NUMBER,
+      random: RETURN_NUMBER,
+      round: RETURN_NUMBER,
+      sign: RETURN_NUMBER,
+      sin: RETURN_NUMBER,
+      sinh: RETURN_NUMBER,
+      sqrt: RETURN_NUMBER,
+      sumPrecise: RETURN_NUMBER,
+      tan: RETURN_NUMBER,
+      tanh: RETURN_NUMBER,
+      trunc: RETURN_NUMBER,
+      E: NUMBER,
+      LN2: NUMBER,
+      LN10: NUMBER,
+      LOG2E: NUMBER,
+      LOG10E: NUMBER,
+      PI: NUMBER,
+      SQRT1_2: NUMBER,
+      SQRT2: NUMBER,
+      [Symbol.toStringTag]: STRING,
     } satisfies Record<MathProperty, TypeInfo | undefined>,
   },
   Error: {
@@ -510,9 +518,9 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     return: { type: "Error" },
     prototypeType: "Error",
     properties: {
-      isError: { type: "Function", return: { type: "Boolean" } },
+      isError: RETURN_BOOLEAN,
       captureStackTrace: { type: "Function" },
-      stackTraceLimit: { type: "Number" },
+      stackTraceLimit: NUMBER,
     } satisfies Record<ErrorProperty, TypeInfo | undefined>,
   },
   Atomics: {
@@ -534,14 +542,14 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
         return: {
           type: "Object",
           properties: {
-            async: { type: "Boolean" },
+            async: BOOLEAN,
             // value: { type: "Promise" or "String" },
           },
         },
       },
       xor: RETURN_NUMBER,
       pause: { type: "Function" },
-      [Symbol.toStringTag]: { type: "String" },
+      [Symbol.toStringTag]: STRING,
     } satisfies Record<AtomicsProperty, TypeInfo | undefined>,
   },
 };
@@ -593,7 +601,7 @@ const ARRAY_PROPERTIES: Record<ArrayPrototypeProperty, TypeInfo> = {
   values: { type: "Function", return: { type: "Iterator" } },
   with: { type: "Function", return: { type: "Array" } },
   // Properties
-  length: { type: "Number" },
+  length: NUMBER,
   // Symbols
   [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
   [Symbol.unscopables]: { type: "Object" },
@@ -602,16 +610,16 @@ const REGEXP_ARRAY_PROPERTIES: Record<RegExpArrayPrototypeProperty, TypeInfo> =
   new Proxy(
     {
       ...ARRAY_PROPERTIES,
-      index: { type: "Number" },
-      input: { type: "String" },
+      index: NUMBER,
+      input: STRING,
       groups: { type: "Object" },
       indices: { type: "Array" },
-      at: { type: "Function", return: { type: "String" } },
+      at: RETURN_STRING,
     },
     {
       get(target, propertyName) {
         if (isFinite(Number(propertyName))) {
-          return { type: "String" };
+          return STRING;
         }
         const key = propertyName as Exclude<
           RegExpArrayPrototypeProperty,
@@ -675,7 +683,7 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     isWellFormed: RETURN_BOOLEAN,
     toWellFormed: RETURN_STRING,
     // Properties
-    length: { type: "Number" },
+    length: NUMBER,
     // Symbols
     [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
   } satisfies Record<StringPrototypeProperty, TypeInfo>,
@@ -686,19 +694,19 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     valueOf: RETURN_NUMBER,
   } satisfies Record<NumberPrototypeProperty, TypeInfo>,
   Boolean: {
-    valueOf: { type: "Boolean" },
+    valueOf: RETURN_BOOLEAN,
   } satisfies Record<BooleanPrototypeProperty, TypeInfo>,
   Symbol: {
-    description: { type: "String" },
-    valueOf: { type: "Symbol" },
+    description: STRING,
+    valueOf: { type: "Function", return: { type: "Symbol" } },
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
     [Symbol.toPrimitive]: { type: "Function", return: { type: "Symbol" } },
   } satisfies Record<SymbolPrototypeProperty, TypeInfo>,
   BigInt: {
-    valueOf: { type: "BigInt" },
+    valueOf: RETURN_BIGINT,
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<BigIntPrototypeProperty, TypeInfo>,
   Function: {
     apply: { type: "Function" },
@@ -706,11 +714,11 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     call: { type: "Function" },
     arguments: { type: "Object" },
     caller: { type: "Function" },
-    length: { type: "Number" },
-    name: { type: "String" },
+    length: NUMBER,
+    name: STRING,
     prototype: { type: "Object" },
     // Symbols
-    [Symbol.hasInstance]: { type: "Function", return: { type: "Boolean" } },
+    [Symbol.hasInstance]: RETURN_BOOLEAN,
     [Symbol.metadata]: { type: "Object" },
   } satisfies Record<FunctionPrototypeProperty, TypeInfo>,
   Array: ARRAY_PROPERTIES,
@@ -725,10 +733,10 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     set: { type: "Function" },
     values: { type: "Function", return: { type: "Iterator" } },
     // Properties
-    size: { type: "Number" },
+    size: NUMBER,
     // Symbols
     [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<MapPrototypeProperty, TypeInfo>,
   Set: {
     add: { type: "Function" },
@@ -747,10 +755,10 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     union: { type: "Function", return: { type: "Set" } },
     values: { type: "Function", return: { type: "Iterator" } },
     // Properties
-    size: { type: "Number" },
+    size: NUMBER,
     // Symbols
     [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<SetPrototypeProperty, TypeInfo>,
   RegExp: {
     compile: { type: "Function" },
@@ -760,21 +768,21 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
       return: { type: "Array", properties: REGEXP_ARRAY_PROPERTIES },
     },
     // Properties
-    dotAll: { type: "Boolean" },
-    flags: { type: "String" },
-    global: { type: "Boolean" },
-    hasIndices: { type: "Boolean" },
-    ignoreCase: { type: "Boolean" },
-    lastIndex: { type: "Number" },
-    multiline: { type: "Boolean" },
-    source: { type: "String" },
-    sticky: { type: "Boolean" },
-    unicode: { type: "Boolean" },
-    unicodeSets: { type: "Boolean" },
+    dotAll: BOOLEAN,
+    flags: STRING,
+    global: BOOLEAN,
+    hasIndices: BOOLEAN,
+    ignoreCase: BOOLEAN,
+    lastIndex: NUMBER,
+    multiline: BOOLEAN,
+    source: STRING,
+    sticky: BOOLEAN,
+    unicode: BOOLEAN,
+    unicodeSets: BOOLEAN,
     // Symbols
     [Symbol.match]: { type: "Function", return: { type: "RegExp" } },
-    [Symbol.replace]: { type: "Function", return: { type: "String" } },
-    [Symbol.search]: { type: "Function", return: { type: "Number" } },
+    [Symbol.replace]: RETURN_STRING,
+    [Symbol.search]: RETURN_NUMBER,
     [Symbol.split]: {
       type: "Function",
       return: { type: "Array", properties: REGEXP_ARRAY_PROPERTIES },
@@ -837,12 +845,12 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     finally: { type: "Function", return: { type: "Promise" } },
     then: { type: "Function", return: { type: "Promise" } },
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<PromisePrototypeProperty, TypeInfo>,
   Int8Array: buildTypedArrayPrototypeTypeInfo("Int8Array"),
   Uint8Array: buildTypedArrayPrototypeTypeInfo("Uint8Array", {
-    toBase64: { type: "Function", return: { type: "String" } },
-    toHex: { type: "Function", return: { type: "String" } },
+    toBase64: RETURN_STRING,
+    toHex: RETURN_STRING,
     setFromBase64: { type: "Function" },
     setFromHex: { type: "Function" },
   }),
@@ -857,17 +865,17 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
   BigInt64Array: buildTypedArrayPrototypeTypeInfo("BigInt64Array"),
   BigUint64Array: buildTypedArrayPrototypeTypeInfo("BigUint64Array"),
   DataView: {
-    getBigInt64: { type: "Function", return: { type: "BigInt" } },
-    getBigUint64: { type: "Function", return: { type: "BigInt" } },
-    getFloat16: { type: "Function", return: { type: "Number" } },
-    getFloat32: { type: "Function", return: { type: "Number" } },
-    getFloat64: { type: "Function", return: { type: "Number" } },
-    getInt16: { type: "Function", return: { type: "Number" } },
-    getInt32: { type: "Function", return: { type: "Number" } },
-    getInt8: { type: "Function", return: { type: "Number" } },
-    getUint16: { type: "Function", return: { type: "Number" } },
-    getUint32: { type: "Function", return: { type: "Number" } },
-    getUint8: { type: "Function", return: { type: "Number" } },
+    getBigInt64: RETURN_BIGINT,
+    getBigUint64: RETURN_BIGINT,
+    getFloat16: RETURN_NUMBER,
+    getFloat32: RETURN_NUMBER,
+    getFloat64: RETURN_NUMBER,
+    getInt16: RETURN_NUMBER,
+    getInt32: RETURN_NUMBER,
+    getInt8: RETURN_NUMBER,
+    getUint16: RETURN_NUMBER,
+    getUint32: RETURN_NUMBER,
+    getUint8: RETURN_NUMBER,
     setBigInt64: { type: "Function" },
     setBigUint64: { type: "Function" },
     setFloat16: { type: "Function" },
@@ -880,11 +888,11 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     setUint32: { type: "Function" },
     setUint8: { type: "Function" },
     // Properties
-    byteLength: { type: "Number" },
-    byteOffset: { type: "Number" },
+    byteLength: NUMBER,
+    byteOffset: NUMBER,
     buffer: { type: "ArrayBuffer" },
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<DataViewPrototypeProperty, TypeInfo>,
   ArrayBuffer: {
     resize: { type: "Function" },
@@ -895,22 +903,22 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
       return: { type: "ArrayBuffer" },
     },
     // Properties
-    byteLength: { type: "Number" },
-    detached: { type: "Boolean" },
-    maxByteLength: { type: "Number" },
-    resizable: { type: "Boolean" },
+    byteLength: NUMBER,
+    detached: BOOLEAN,
+    maxByteLength: NUMBER,
+    resizable: BOOLEAN,
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<ArrayBufferPrototypeProperty, TypeInfo>,
   SharedArrayBuffer: {
     grow: { type: "Function" },
     slice: { type: "Function", return: { type: "SharedArrayBuffer" } },
     // Properties
-    byteLength: { type: "Number" },
-    growable: { type: "Boolean" },
-    maxByteLength: { type: "Number" },
+    byteLength: NUMBER,
+    growable: BOOLEAN,
+    maxByteLength: NUMBER,
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
     get [Symbol.species]() {
       return WELLKNOWN_GLOBALS.SharedArrayBuffer!;
     },
@@ -921,14 +929,14 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     has: RETURN_BOOLEAN,
     set: { type: "Function" },
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<WeakMapPrototypeProperty, TypeInfo>,
   WeakSet: {
     add: { type: "Function" },
     delete: RETURN_BOOLEAN,
     has: RETURN_BOOLEAN,
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<WeakSetPrototypeProperty, TypeInfo>,
   Iterator: {
     next: { type: "Function" },
@@ -948,41 +956,41 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     find: { type: "Function" },
     // Symbols
     [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
     [Symbol.dispose]: { type: "Function" },
   } satisfies Record<IteratorPrototypeProperty, TypeInfo>,
   DisposableStack: {
     adopt: { type: "Function" },
     dispose: { type: "Function" },
     defer: { type: "Function" },
-    disposed: { type: "Boolean" },
+    disposed: BOOLEAN,
     move: { type: "Function", return: { type: "DisposableStack" } },
     use: { type: "Function" },
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
     [Symbol.dispose]: { type: "Function" },
   } satisfies Record<DisposableStackPrototypeProperty, TypeInfo>,
   AsyncDisposableStack: {
     adopt: { type: "Function", return: { type: "Promise" } },
     disposeAsync: { type: "Function" },
     defer: { type: "Function" },
-    disposed: { type: "Boolean" },
+    disposed: BOOLEAN,
     move: { type: "Function", return: { type: "AsyncDisposableStack" } },
     use: { type: "Function" },
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
     [Symbol.asyncDispose]: { type: "Function" },
   } satisfies Record<AsyncDisposableStackPrototypeProperty, TypeInfo>,
   WeakRef: {
     deref: { type: "Function" },
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<WeakRefPrototypeProperty, TypeInfo>,
   FinalizationRegistry: {
     register: { type: "Function" },
     unregister: RETURN_BOOLEAN,
     // Symbols
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
   } satisfies Record<FinalizationRegistryPrototypeProperty, TypeInfo>,
 };
 
@@ -1017,7 +1025,7 @@ function buildGlobalTypedArrayTypeInfo<K extends string = never>(
     return: { type },
     prototypeType: type,
     properties: {
-      BYTES_PER_ELEMENT: { type: "Number" },
+      BYTES_PER_ELEMENT: NUMBER,
       from: { type: "Function", return: { type } },
       of: { type: "Function", return: { type } },
       ...otherProperties,
@@ -1065,13 +1073,13 @@ function buildTypedArrayPrototypeTypeInfo<K extends string = never>(
     subarray: { type: "Function", return: { type } },
     valueOf: { type: "Function" },
     // Properties
-    length: { type: "Number" },
+    length: NUMBER,
     buffer: { type: "ArrayBuffer" },
-    byteLength: { type: "Number" },
-    byteOffset: { type: "Number" },
+    byteLength: NUMBER,
+    byteOffset: NUMBER,
     // Symbols
     [Symbol.iterator]: { type: "Function", return: { type: "Iterator" } },
-    [Symbol.toStringTag]: { type: "String" },
+    [Symbol.toStringTag]: STRING,
     ...otherProperties,
   };
 }
