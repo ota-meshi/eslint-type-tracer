@@ -1116,6 +1116,20 @@ Array [
 ]
 `;
 
+exports[`type-tracer-for-es buildTypeTracerForES math.js target(Math.sumPrecise());
+ 1`] = `
+Array [
+  Object {
+    "args": Object {
+      "Math.sumPrecise()": Array [
+        "Number",
+      ],
+    },
+    "expr": "target(Math.sumPrecise())",
+  },
+]
+`;
+
 exports[`type-tracer-for-es buildTypeTracerForES test.js target("foo");
 target(42);
 target(true);

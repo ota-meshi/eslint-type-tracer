@@ -212,7 +212,9 @@ export type TypedArrayPrototypeProperty = Exclude<
   keyof Int8Array,
   ExcludePrototypeProperty | "BYTES_PER_ELEMENT"
 >;
-export type MathProperty = Exclude<keyof typeof Math, ExcludeProperty>;
+export type MathProperty =
+  | Exclude<keyof typeof Math, ExcludeProperty>
+  | "sumPrecise";
 export type ErrorProperty =
   | Exclude<keyof typeof Error, ExcludeProperty | "prepareStackTrace">
   | "isError";
