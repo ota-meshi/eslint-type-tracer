@@ -4,7 +4,7 @@ import type { TypeChecker, TypeTracer } from "./utils.ts";
 import { getSimpleExpressionType } from "./utils.ts";
 import type { AST, SourceCode } from "eslint";
 import type { TSESTree } from "@typescript-eslint/types";
-import type { TypeInfo, TypeName } from "./types.ts";
+import type { ESContext, TypeInfo, TypeName } from "./types.ts";
 import type { Scope } from "eslint";
 import { getPropertyKeyValue } from "./get-property-key-value.ts";
 
@@ -106,17 +106,13 @@ function buildExpressionTypeProviderImpl(
             ? (consequent?.type ?? null)
             : null;
         },
-        get return() {
-          const t = consequent?.return?.type;
-          if (t && t === alternate?.return?.type) {
-            return {
-              type: t,
-            };
-          }
-          return null;
-        },
+        return: compositeReturnType(consequent, alternate),
       };
     },
+  };
+
+  const ctx: ESContext = {
+    getTypeInfo,
   };
 
   const trackedTypeInfo = new Map();
@@ -476,11 +472,19 @@ function buildExpressionTypeProviderImpl(
       | TSESTree.NewExpression
       | TSESTree.TaggedTemplateExpression,
   ): TypeInfo | null {
-    const callee =
+    const callee = getTypeInfo(
       node.type === "CallExpression" || node.type === "NewExpression"
         ? node.callee
-        : node.tag;
-    return getTypeInfo(callee)?.return ?? null;
+        : node.tag,
+    );
+    const returnInfo = callee?.return;
+    if (!returnInfo) return null;
+    if (typeof returnInfo !== "function") {
+      return returnInfo;
+    }
+    if (node.type !== "CallExpression" && node.type !== "NewExpression")
+      return null;
+    return returnInfo(node.arguments, ctx);
   }
 
   /**
@@ -520,16 +524,7 @@ function buildExpressionTypeProviderImpl(
             // Merge return type
             returnStatement = {
               type: base.type,
-              get return() {
-                const type1 = base.return?.type;
-                const type2 = argument.return?.type;
-                if (!type1 || !type2 || type1 !== type2) {
-                  return null;
-                }
-                return {
-                  type: type1,
-                };
-              },
+              return: compositeReturnType(base, argument),
             };
           } else {
             return null;
@@ -664,5 +659,32 @@ function buildExpressionTypeProviderImpl(
       return getPatternTypeInfo(id, pattern.left, expression);
     }
     return null;
+  }
+
+  /**
+   * Combines two return types into one.
+   */
+  function compositeReturnType(
+    type1: TypeInfo | null,
+    type2: TypeInfo | null,
+  ): ((args: TSESTree.CallExpressionArgument[]) => TypeInfo | null) | null {
+    const return1 = type1?.return;
+    const return2 = type2?.return;
+    if (!return1 || !return2) {
+      return null;
+    }
+    return (args) => {
+      const t1 = typeof return1 === "function" ? return1(args, ctx) : return1;
+      const t2 = typeof return2 === "function" ? return2(args, ctx) : return2;
+      if (!t1 || !t2) {
+        return null;
+      }
+      if (t1.type === t2.type) {
+        return {
+          type: t1.type,
+        };
+      }
+      return null;
+    };
   }
 }

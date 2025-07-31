@@ -1,3 +1,5 @@
+import type { TSESTree } from "@typescript-eslint/types";
+
 export type TypeName =
   | "Array"
   | "Date"
@@ -48,9 +50,24 @@ export type TypeName =
   | "null"
   | "undefined";
 
+export type ESContext = {
+  getTypeInfo: (
+    node:
+      | TSESTree.Expression
+      | TSESTree.FunctionDeclaration
+      | TSESTree.PrivateIdentifier,
+  ) => TypeInfo | null;
+};
+
 export type TypeInfo = {
   type: TypeName | null;
-  return?: TypeInfo | null;
+  return?:
+    | TypeInfo
+    | null
+    | ((
+        args: TSESTree.CallExpressionArgument[],
+        ctx: ESContext,
+      ) => TypeInfo | null);
   properties?: Record<string | symbol, TypeInfo | undefined>;
   prototypeType?: TypeName;
 };

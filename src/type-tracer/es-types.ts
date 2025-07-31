@@ -62,6 +62,7 @@ const STRING = { type: "String" } as const;
 const NUMBER = { type: "Number" } as const;
 const BOOLEAN = { type: "Boolean" } as const;
 const BIGINT = { type: "BigInt" } as const;
+const SYMBOL = { type: "Symbol" } as const;
 const RETURN_STRING = {
   type: "Function",
   return: STRING,
@@ -77,6 +78,10 @@ const RETURN_BOOLEAN = {
 const RETURN_BIGINT = {
   type: "Function",
   return: BIGINT,
+} as const;
+const RETURN_SYMBOL = {
+  type: "Function",
+  return: SYMBOL,
 } as const;
 
 export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
@@ -116,28 +121,28 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
   },
   Symbol: {
     type: "Function",
-    return: { type: "Symbol" },
+    return: SYMBOL,
     prototypeType: "Symbol",
     properties: {
-      for: { type: "Function", return: { type: "Symbol" } },
+      for: RETURN_SYMBOL,
       keyFor: RETURN_STRING,
-      asyncIterator: { type: "Symbol" },
-      hasInstance: { type: "Symbol" },
-      isConcatSpreadable: { type: "Symbol" },
-      iterator: { type: "Symbol" },
-      match: { type: "Symbol" },
-      matchAll: { type: "Symbol" },
-      replace: { type: "Symbol" },
-      search: { type: "Symbol" },
-      species: { type: "Symbol" },
-      split: { type: "Symbol" },
-      toPrimitive: { type: "Symbol" },
-      toStringTag: { type: "Symbol" },
-      unscopables: { type: "Symbol" },
-      dispose: { type: "Symbol" },
-      asyncDispose: { type: "Symbol" },
-      metadata: { type: "Symbol" },
-      observable: { type: "Symbol" },
+      asyncIterator: SYMBOL,
+      hasInstance: SYMBOL,
+      isConcatSpreadable: SYMBOL,
+      iterator: SYMBOL,
+      match: SYMBOL,
+      matchAll: SYMBOL,
+      replace: SYMBOL,
+      search: SYMBOL,
+      species: SYMBOL,
+      split: SYMBOL,
+      toPrimitive: SYMBOL,
+      toStringTag: SYMBOL,
+      unscopables: SYMBOL,
+      dispose: SYMBOL,
+      asyncDispose: SYMBOL,
+      metadata: SYMBOL,
+      observable: SYMBOL,
     } satisfies Record<SymbolProperty, TypeInfo | undefined>,
   },
   BigInt: {
@@ -154,12 +159,24 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     return: { type: "Object" },
     prototypeType: "Object",
     properties: {
-      assign: { type: "Function", return: { type: "Object" } },
+      assign: {
+        type: "Function",
+        return([arg], ctx) {
+          if (arg && arg.type !== "SpreadElement") return ctx.getTypeInfo(arg);
+          return { type: "Object" };
+        },
+      },
       create: { type: "Function", return: { type: "Object" } },
       defineProperties: { type: "Function", return: { type: "Object" } },
       defineProperty: { type: "Function", return: { type: "Object" } },
       entries: { type: "Function", return: { type: "Array" } },
-      freeze: { type: "Function", return: { type: "Object" } },
+      freeze: {
+        type: "Function",
+        return([arg], ctx) {
+          if (arg && arg.type !== "SpreadElement") return ctx.getTypeInfo(arg);
+          return { type: "Object" };
+        },
+      },
       fromEntries: { type: "Function", return: { type: "Object" } },
       getOwnPropertyDescriptor: {
         type: "Function",
@@ -698,10 +715,10 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
   } satisfies Record<BooleanPrototypeProperty, TypeInfo>,
   Symbol: {
     description: STRING,
-    valueOf: { type: "Function", return: { type: "Symbol" } },
+    valueOf: RETURN_SYMBOL,
     // Symbols
     [Symbol.toStringTag]: STRING,
-    [Symbol.toPrimitive]: { type: "Function", return: { type: "Symbol" } },
+    [Symbol.toPrimitive]: RETURN_SYMBOL,
   } satisfies Record<SymbolPrototypeProperty, TypeInfo>,
   BigInt: {
     valueOf: RETURN_BIGINT,
