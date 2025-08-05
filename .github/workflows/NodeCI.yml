@@ -50,7 +50,7 @@ jobs:
       - name: Install Packages
         run: npm install -f
       - name: Download lib
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: lib
           path: ./lib/
@@ -70,7 +70,7 @@ jobs:
           npm install -f
           npm i -D eslint@^8 -f
       - name: Download lib
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: lib
           path: ./lib/
@@ -92,7 +92,7 @@ jobs:
       - name: Install Target Packages
         run: npm install -f
       - name: Download lib
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: lib
           path: ./lib/
