@@ -1,7 +1,7 @@
 import type { UserConfig } from "tsdown";
 import { defineConfig } from "tsdown";
 
-export default defineConfig([
+const config: UserConfig = defineConfig([
   {
     clean: true,
     dts: true,
@@ -10,4 +10,5 @@ export default defineConfig([
     format: ["esm", "cjs"],
     treeshake: true,
   },
-]) as UserConfig;
+]);
+export default config;
