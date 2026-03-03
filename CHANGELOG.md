@@ -1,5 +1,11 @@
 # eslint-type-tracer
 
+## 0.5.1
+
+### Patch Changes
+
+- [#46](https://github.com/ota-meshi/eslint-type-tracer/pull/46) [`63ff43f`](https://github.com/ota-meshi/eslint-type-tracer/commit/63ff43ff8b18f97198a4b0cfba1fa97f6bd38d20) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: update exports to use .mjs extension
+
 ## 0.5.0
 
 ### Minor Changes
