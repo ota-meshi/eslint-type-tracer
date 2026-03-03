@@ -1165,7 +1165,7 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     add: { type: "Function", return: { type: "Temporal.Duration" } },
     subtract: { type: "Function", return: { type: "Temporal.Duration" } },
     round: { type: "Function", return: { type: "Temporal.Duration" } },
-    total: { type: "Function" },
+    total: RETURN_NUMBER,
     toJSON: RETURN_STRING,
     valueOf: { type: "Function" },
     // Symbols
@@ -1441,15 +1441,29 @@ export function getPropertyType(
   propertyName: string | number | symbol,
 ): TypeInfo | null {
   const prop = typeInfo.properties?.[propertyName];
-  if (prop) {
+  if (isTypeInfo(prop)) {
     return prop;
   }
   const proto =
     typeInfo.type && WELLKNOWN_PROTOTYPE[typeInfo.type]?.[propertyName];
-  if (proto) {
+  if (isTypeInfo(proto)) {
     return proto;
   }
-  return OBJECT_PROTOTYPE[propertyName as ObjectPrototypeProperty] ?? null;
+  const objectProto = OBJECT_PROTOTYPE[propertyName as ObjectPrototypeProperty];
+  return isTypeInfo(objectProto) ? objectProto : null;
+
+  /**
+   * Checks if a property is a TypeInfo object (i.e., not a primitive value or a built-in property).
+   */
+  function isTypeInfo(
+    property: TypeInfo | null | undefined,
+  ): property is TypeInfo {
+    return (
+      typeof property === "object" &&
+      // It is not a built-in property.
+      property !== {}[propertyName as never]
+    );
+  }
 }
 
 /**
