@@ -466,10 +466,11 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
     type: "Function",
     return: { type: "SharedArrayBuffer" },
     prototypeType: "SharedArrayBuffer",
-    properties: {} satisfies Record<
-      SharedArrayBufferProperty,
-      TypeInfo | undefined
-    >,
+    properties: {
+      get [Symbol.species]() {
+        return WELLKNOWN_GLOBALS.SharedArrayBuffer!;
+      },
+    } satisfies Record<SharedArrayBufferProperty, TypeInfo | undefined>,
   },
   WeakMap: {
     type: "Function",
@@ -1047,9 +1048,6 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     maxByteLength: NUMBER,
     // Symbols
     [Symbol.toStringTag]: STRING,
-    get [Symbol.species]() {
-      return WELLKNOWN_GLOBALS.SharedArrayBuffer!;
-    },
   } satisfies Record<SharedArrayBufferPrototypeProperty, TypeInfo>,
   WeakMap: {
     delete: RETURN_BOOLEAN,
