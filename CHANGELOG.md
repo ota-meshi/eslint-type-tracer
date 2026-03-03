@@ -1,5 +1,11 @@
 # eslint-type-tracer
 
+## 0.5.0
+
+### Minor Changes
+
+- [#39](https://github.com/ota-meshi/eslint-type-tracer/pull/39) [`5c0b754`](https://github.com/ota-meshi/eslint-type-tracer/commit/5c0b754bd64360747235c9b938ce55ca6d660655) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add support for Temporal
+
 ## 0.4.1
 
 ### Patch Changes
