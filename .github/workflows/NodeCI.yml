@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Archive lib
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         id: lib-upload
         with:
           name: lib
@@ -55,7 +55,7 @@ jobs:
       - name: Install Packages
         run: npm install -f
       - name: Download lib
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: lib
           path: ./lib/
@@ -75,7 +75,7 @@ jobs:
           npm install -f
           npm i -D eslint@^8 -f
       - name: Download lib
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: lib
           path: ./lib/
@@ -97,7 +97,7 @@ jobs:
       - name: Install Target Packages
         run: npm install -f
       - name: Download lib
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: lib
           path: ./lib/
