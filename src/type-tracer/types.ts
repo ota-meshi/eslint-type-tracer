@@ -82,9 +82,8 @@ export type TypeInfo = {
 
 export type WellKnownGlobals = Record<string, TypeInfo | undefined>;
 
-export type WellKnownPrototypes = Record<
-  string,
-  Record<string | symbol, TypeInfo | undefined> | undefined
+export type WellKnownPrototypes = Partial<
+  Record<TypeName, Record<string | symbol, TypeInfo | undefined> | undefined>
 >;
 
 type ExcludeProperty = "prototype";
@@ -246,14 +245,72 @@ export type ErrorProperty =
 export type AtomicsProperty =
   | Exclude<keyof typeof Atomics, ExcludeProperty>
   | "pause";
-export type TemporalProperty =
-  // | Exclude<keyof typeof Temporal, ExcludeProperty>
-  | "Duration"
-  | "Instant"
-  | "PlainDate"
-  | "PlainDateTime"
-  | "PlainMonthDay"
-  | "PlainTime"
-  | "PlainYearMonth"
-  | "ZonedDateTime"
-  | "Now";
+export type TemporalProperty = Exclude<keyof typeof Temporal, ExcludeProperty>;
+export type TemporalDurationProperty = Exclude<
+  keyof typeof Temporal.Duration,
+  ExcludeProperty
+>;
+export type TemporalDurationPrototypeProperty = Exclude<
+  keyof Temporal.Duration,
+  ExcludePrototypeProperty
+>;
+export type TemporalInstantProperty = Exclude<
+  keyof typeof Temporal.Instant,
+  ExcludeProperty
+>;
+export type TemporalInstantPrototypeProperty = Exclude<
+  keyof Temporal.Instant,
+  ExcludePrototypeProperty
+>;
+export type TemporalPlainDateProperty = Exclude<
+  keyof typeof Temporal.PlainDate,
+  ExcludeProperty
+>;
+export type TemporalPlainDatePrototypeProperty = Exclude<
+  keyof Temporal.PlainDate,
+  ExcludePrototypeProperty
+>;
+export type TemporalPlainDateTimeProperty = Exclude<
+  keyof typeof Temporal.PlainDateTime,
+  ExcludeProperty
+>;
+export type TemporalPlainDateTimePrototypeProperty = Exclude<
+  keyof Temporal.PlainDateTime,
+  ExcludePrototypeProperty
+>;
+export type TemporalPlainMonthDayProperty = Exclude<
+  keyof typeof Temporal.PlainMonthDay,
+  ExcludeProperty
+>;
+export type TemporalPlainMonthDayPrototypeProperty = Exclude<
+  keyof Temporal.PlainMonthDay,
+  ExcludePrototypeProperty
+>;
+export type TemporalPlainTimeProperty = Exclude<
+  keyof typeof Temporal.PlainTime,
+  ExcludeProperty
+>;
+export type TemporalPlainTimePrototypeProperty = Exclude<
+  keyof Temporal.PlainTime,
+  ExcludePrototypeProperty
+>;
+export type TemporalPlainYearMonthProperty = Exclude<
+  keyof typeof Temporal.PlainYearMonth,
+  ExcludeProperty
+>;
+export type TemporalPlainYearMonthPrototypeProperty = Exclude<
+  keyof Temporal.PlainYearMonth,
+  ExcludePrototypeProperty
+>;
+export type TemporalZonedDateTimeProperty = Exclude<
+  keyof typeof Temporal.ZonedDateTime,
+  ExcludeProperty
+>;
+export type TemporalZonedDateTimePrototypeProperty = Exclude<
+  keyof Temporal.ZonedDateTime,
+  ExcludePrototypeProperty
+>;
+export type TemporalNowProperty = Exclude<
+  keyof typeof Temporal.Now,
+  ExcludeProperty
+>;
