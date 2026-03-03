@@ -47,6 +47,14 @@ export type TypeName =
   | "WeakRef"
   | "FinalizationRegistry"
   | "Error"
+  | "Temporal.Duration"
+  | "Temporal.Instant"
+  | "Temporal.PlainDate"
+  | "Temporal.PlainDateTime"
+  | "Temporal.PlainMonthDay"
+  | "Temporal.PlainTime"
+  | "Temporal.PlainYearMonth"
+  | "Temporal.ZonedDateTime"
   | "null"
   | "undefined";
 
@@ -238,3 +246,14 @@ export type ErrorProperty =
 export type AtomicsProperty =
   | Exclude<keyof typeof Atomics, ExcludeProperty>
   | "pause";
+export type TemporalProperty =
+  // | Exclude<keyof typeof Temporal, ExcludeProperty>
+  | "Duration"
+  | "Instant"
+  | "PlainDate"
+  | "PlainDateTime"
+  | "PlainMonthDay"
+  | "PlainTime"
+  | "PlainYearMonth"
+  | "ZonedDateTime"
+  | "Now";

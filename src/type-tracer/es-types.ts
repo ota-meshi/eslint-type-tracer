@@ -56,6 +56,7 @@ import type {
   FinalizationRegistryPrototypeProperty,
   TypedArrayProperty,
   AtomicsProperty,
+  TemporalProperty,
 } from "./types";
 
 const STRING = { type: "String" } as const;
@@ -142,7 +143,6 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
       dispose: SYMBOL,
       asyncDispose: SYMBOL,
       metadata: SYMBOL,
-      observable: SYMBOL,
     } satisfies Record<SymbolProperty, TypeInfo | undefined>,
   },
   BigInt: {
@@ -290,6 +290,117 @@ export const WELLKNOWN_GLOBALS: WellKnownGlobals = {
       parse: RETURN_NUMBER,
       UTC: RETURN_NUMBER,
     } satisfies Record<DateProperty, TypeInfo | undefined>,
+  },
+  Temporal: {
+    type: "Object",
+    properties: {
+      Duration: {
+        type: "Function",
+        return: { type: "Temporal.Duration" },
+        prototypeType: "Temporal.Duration",
+        properties: {
+          from: { type: "Function", return: { type: "Temporal.Duration" } },
+        },
+      },
+      Instant: {
+        type: "Function",
+        return: { type: "Temporal.Instant" },
+        prototypeType: "Temporal.Instant",
+        properties: {
+          from: { type: "Function", return: { type: "Temporal.Instant" } },
+          fromEpochMilliseconds: {
+            type: "Function",
+            return: { type: "Temporal.Instant" },
+          },
+          fromEpochNanoseconds: {
+            type: "Function",
+            return: { type: "Temporal.Instant" },
+          },
+        },
+      },
+      PlainDate: {
+        type: "Function",
+        return: { type: "Temporal.PlainDate" },
+        prototypeType: "Temporal.PlainDate",
+        properties: {
+          from: { type: "Function", return: { type: "Temporal.PlainDate" } },
+        },
+      },
+      PlainDateTime: {
+        type: "Function",
+        return: { type: "Temporal.PlainDateTime" },
+        prototypeType: "Temporal.PlainDateTime",
+        properties: {
+          from: {
+            type: "Function",
+            return: { type: "Temporal.PlainDateTime" },
+          },
+        },
+      },
+      PlainMonthDay: {
+        type: "Function",
+        return: { type: "Temporal.PlainMonthDay" },
+        prototypeType: "Temporal.PlainMonthDay",
+        properties: {
+          from: {
+            type: "Function",
+            return: { type: "Temporal.PlainMonthDay" },
+          },
+        },
+      },
+      PlainTime: {
+        type: "Function",
+        return: { type: "Temporal.PlainTime" },
+        prototypeType: "Temporal.PlainTime",
+        properties: {
+          from: { type: "Function", return: { type: "Temporal.PlainTime" } },
+        },
+      },
+      PlainYearMonth: {
+        type: "Function",
+        return: { type: "Temporal.PlainYearMonth" },
+        prototypeType: "Temporal.PlainYearMonth",
+        properties: {
+          from: {
+            type: "Function",
+            return: { type: "Temporal.PlainYearMonth" },
+          },
+        },
+      },
+      ZonedDateTime: {
+        type: "Function",
+        return: { type: "Temporal.ZonedDateTime" },
+        prototypeType: "Temporal.ZonedDateTime",
+        properties: {
+          from: {
+            type: "Function",
+            return: { type: "Temporal.ZonedDateTime" },
+          },
+        },
+      },
+      Now: {
+        type: "Object",
+        properties: {
+          instant: { type: "Function", return: { type: "Temporal.Instant" } },
+          plainDateTimeISO: {
+            type: "Function",
+            return: { type: "Temporal.PlainDateTime" },
+          },
+          zonedDateTimeISO: {
+            type: "Function",
+            return: { type: "Temporal.ZonedDateTime" },
+          },
+          plainDateISO: {
+            type: "Function",
+            return: { type: "Temporal.PlainDate" },
+          },
+          plainTimeISO: {
+            type: "Function",
+            return: { type: "Temporal.PlainTime" },
+          },
+        },
+      },
+    } satisfies Record<TemporalProperty, TypeInfo | undefined>,
   },
   Promise: {
     type: "Function",

@@ -1,7 +1,7 @@
 import type { UserConfig } from "tsdown";
 import { defineConfig } from "tsdown";
 
-export default defineConfig([
+const config: UserConfig[] = defineConfig([
   {
     clean: true,
     dts: true,
@@ -9,5 +9,7 @@ export default defineConfig([
     entry: { index: "src/index.ts" },
     format: ["esm", "cjs"],
     treeshake: true,
+    external: ["@typescript-eslint/types"],
   },
-]) as UserConfig;
+]);
+export default config;
