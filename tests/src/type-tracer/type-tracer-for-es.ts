@@ -95,6 +95,7 @@ async function getResultOfBuildTypeTracerForTS(code: string, filename: string) {
         globals: {
           Float16Array: "readonly",
           Intl: "readonly",
+          Temporal: "readonly",
         },
       },
       rules: { "test/test-rule": "warn" },

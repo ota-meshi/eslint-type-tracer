@@ -1172,6 +1172,64 @@ Array [
 ]
 `;
 
+exports[`type-tracer-for-es buildTypeTracerForES temporal.js target(
+  Temporal.Duration.from("P1DT2H"),
+  Temporal.Instant.fromEpochMilliseconds(0),
+  Temporal.PlainDate.from("2020-01-01"),
+  Temporal.PlainDateTime.from("2020-01-01T00:00"),
+  Temporal.PlainMonthDay.from({ month: 1, day: 1 }),
+  Temporal.PlainTime.from("12:00"),
+  Temporal.PlainYearMonth.from({ year: 2020, month: 1 }),
+  Temporal.ZonedDateTime.from("2020-01-01T00:00[UTC]"),
+  Temporal.Now.instant(),
+);
+ 1`] = `
+Array [
+  Object {
+    "args": Object {
+      "Temporal.Duration.from(\\"P1DT2H\\")": Array [
+        "Temporal.Duration",
+      ],
+      "Temporal.Instant.fromEpochMilliseconds(0)": Array [
+        "Temporal.Instant",
+      ],
+      "Temporal.Now.instant()": Array [
+        "Temporal.Instant",
+      ],
+      "Temporal.PlainDate.from(\\"2020-01-01\\")": Array [
+        "Temporal.PlainDate",
+      ],
+      "Temporal.PlainDateTime.from(\\"2020-01-01T00:00\\")": Array [
+        "Temporal.PlainDateTime",
+      ],
+      "Temporal.PlainMonthDay.from({ month: 1, day: 1 })": Array [
+        "Temporal.PlainMonthDay",
+      ],
+      "Temporal.PlainTime.from(\\"12:00\\")": Array [
+        "Temporal.PlainTime",
+      ],
+      "Temporal.PlainYearMonth.from({ year: 2020, month: 1 })": Array [
+        "Temporal.PlainYearMonth",
+      ],
+      "Temporal.ZonedDateTime.from(\\"2020-01-01T00:00[UTC]\\")": Array [
+        "Temporal.ZonedDateTime",
+      ],
+    },
+    "expr": "target(
+  Temporal.Duration.from(\\"P1DT2H\\"),
+  Temporal.Instant.fromEpochMilliseconds(0),
+  Temporal.PlainDate.from(\\"2020-01-01\\"),
+  Temporal.PlainDateTime.from(\\"2020-01-01T00:00\\"),
+  Temporal.PlainMonthDay.from({ month: 1, day: 1 }),
+  Temporal.PlainTime.from(\\"12:00\\"),
+  Temporal.PlainYearMonth.from({ year: 2020, month: 1 }),
+  Temporal.ZonedDateTime.from(\\"2020-01-01T00:00[UTC]\\"),
+  Temporal.Now.instant(),
+)",
+  },
+]
+`;
+
 exports[`type-tracer-for-es buildTypeTracerForES test.js target("foo");
 target(42);
 target(true);
