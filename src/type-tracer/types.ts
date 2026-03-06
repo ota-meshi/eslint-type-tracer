@@ -241,7 +241,8 @@ export type MathProperty =
   | "sumPrecise";
 export type ErrorProperty =
   | Exclude<keyof typeof Error, ExcludeProperty | "prepareStackTrace">
-  | "isError";
+  | "captureStackTrace"
+  | "stackTraceLimit";
 export type AtomicsProperty =
   | Exclude<keyof typeof Atomics, ExcludeProperty>
   | "pause";
