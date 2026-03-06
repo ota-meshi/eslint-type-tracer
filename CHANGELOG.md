@@ -1,5 +1,11 @@
 # eslint-type-tracer
 
+## 0.5.2
+
+### Patch Changes
+
+- [#51](https://github.com/ota-meshi/eslint-type-tracer/pull/51) [`2296102`](https://github.com/ota-meshi/eslint-type-tracer/commit/22961029547262db20bcbdca27a59b873934381d) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: improve Temporal type definitions
+
 ## 0.5.1
 
 ### Patch Changes
