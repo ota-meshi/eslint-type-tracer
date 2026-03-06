@@ -889,6 +889,8 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     keys: { type: "Function", return: { type: "Iterator" } },
     set: { type: "Function" },
     values: { type: "Function", return: { type: "Iterator" } },
+    getOrInsert: { type: "Function" },
+    getOrInsertComputed: { type: "Function" },
     // Properties
     size: NUMBER,
     // Symbols
@@ -994,6 +996,10 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     toTimeString: RETURN_STRING,
     toUTCString: RETURN_STRING,
     valueOf: RETURN_NUMBER,
+    toTemporalInstant: {
+      type: "Function",
+      return: { type: "Temporal.Instant" },
+    },
     // Symbols
     [Symbol.toPrimitive]: { type: "Function", return: { type: "Date" } },
   } satisfies Record<DatePrototypeProperty, TypeInfo>,
@@ -1082,6 +1088,8 @@ const WELLKNOWN_PROTOTYPE: WellKnownPrototypes = {
     get: { type: "Function" },
     has: RETURN_BOOLEAN,
     set: { type: "Function" },
+    getOrInsert: { type: "Function" },
+    getOrInsertComputed: { type: "Function" },
     // Symbols
     [Symbol.toStringTag]: STRING,
   } satisfies Record<WeakMapPrototypeProperty, TypeInfo>,

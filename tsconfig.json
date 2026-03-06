@@ -11,10 +11,10 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
     "paths": {
-      "*": ["typings/*"]
+      "*": ["./typings/*"]
     },
+    "types": ["mocha", "node"],
     "esModuleInterop": true,
     "allowArbitraryExtensions": true,
     "moduleResolution": "bundler",
