@@ -1,4 +1,4 @@
-import { target } from "./target";
+import { target } from "./target.ts";
 
 target(fn, String);
 
