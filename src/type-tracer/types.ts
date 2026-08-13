@@ -139,8 +139,7 @@ export type SetPrototypeProperty = Exclude<
   ExcludePrototypeProperty
 >;
 export type RegExpProperty =
-  | Exclude<keyof typeof RegExp, ExcludeProperty>
-  | "escape";
+  Exclude<keyof typeof RegExp, ExcludeProperty> | "escape";
 export type RegExpPrototypeProperty = Exclude<
   keyof RegExp,
   ExcludePrototypeProperty
@@ -205,8 +204,7 @@ export type FinalizationRegistryPrototypeProperty = Exclude<
   ExcludePrototypeProperty
 >;
 export type IntlProperty =
-  | Exclude<keyof typeof Intl, ExcludeProperty>
-  | "DurationFormat";
+  Exclude<keyof typeof Intl, ExcludeProperty> | "DurationFormat";
 export type IteratorProperty = Exclude<keyof typeof Iterator, ExcludeProperty>;
 export type IteratorPrototypeProperty = Exclude<
   keyof IteratorObject<unknown>,
@@ -237,15 +235,13 @@ export type TypedArrayPrototypeProperty = Exclude<
   ExcludePrototypeProperty | "BYTES_PER_ELEMENT"
 >;
 export type MathProperty =
-  | Exclude<keyof typeof Math, ExcludeProperty>
-  | "sumPrecise";
+  Exclude<keyof typeof Math, ExcludeProperty> | "sumPrecise";
 export type ErrorProperty =
   | Exclude<keyof typeof Error, ExcludeProperty | "prepareStackTrace">
   | "captureStackTrace"
   | "stackTraceLimit";
 export type AtomicsProperty =
-  | Exclude<keyof typeof Atomics, ExcludeProperty>
-  | "pause";
+  Exclude<keyof typeof Atomics, ExcludeProperty> | "pause";
 export type TemporalProperty = Exclude<keyof typeof Temporal, ExcludeProperty>;
 export type TemporalDurationProperty = Exclude<
   keyof typeof Temporal.Duration,
