@@ -29,6 +29,7 @@ export default [
         },
       ],
       "default-case": "off",
+      "n/file-extension-in-import": "off",
     },
   },
   {
