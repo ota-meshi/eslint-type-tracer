@@ -205,6 +205,9 @@ function buildExpressionTypeProviderImpl(
       if (!reference.writeExpr) {
         continue;
       }
+      if (reference.identifier.type !== "Identifier") {
+        return null; // unknown
+      }
       const parent = reference.writeExpr.parent;
       if (!parent) {
         return null; // unknown
