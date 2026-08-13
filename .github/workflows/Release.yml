@@ -39,6 +39,9 @@ jobs:
           version: npm run changeset:version
           publish: npm run changeset:publish
           commit: "chore: release eslint-type-tracer"
-          title: "chore: release eslint-type-tracer"
+           version-script: npm run changeset:version
+           publish-script: npm run changeset:publish
+           commit-message: "chore: release eslint-type-tracer"
+           pr-title: "chore: release eslint-type-tracer"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
