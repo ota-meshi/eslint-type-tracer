@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "strict": true,
-    "lib": ["DOM", "ESNext"]
+    "lib": ["DOM", "ESNext"],
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   }
 }

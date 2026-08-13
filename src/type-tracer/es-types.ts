@@ -74,7 +74,7 @@ import type {
   TemporalPlainTimePrototypeProperty,
   TemporalPlainYearMonthPrototypeProperty,
   TemporalZonedDateTimePrototypeProperty,
-} from "./types";
+} from "./types.ts";
 
 const STRING = { type: "String" } as const;
 const NUMBER = { type: "Number" } as const;
