@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.0",
-    "@changesets/cli": "^2.29.4",
+    "@changesets/cli": "^3.0.0",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.5.0",
     "@ota-meshi/eslint-plugin": "^0.20.0",
     "@ota-meshi/test-snapshot": "^1.1.0",
@@ -78,7 +78,7 @@
     "eslint-plugin-json-schema-validator": "^6.0.0",
     "eslint-plugin-jsonc": "^3.0.0",
     "eslint-plugin-markdown": "^5.1.0",
-    "eslint-plugin-n": "^17.18.0",
+    "eslint-plugin-n": "^18.0.0",
     "eslint-plugin-node-dependencies": "^2.0.0",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-regexp": "^3.0.0",

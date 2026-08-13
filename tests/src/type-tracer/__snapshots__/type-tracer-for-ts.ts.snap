@@ -1,6 +1,6 @@
 // test-snapshot v1
 
-exports[`type-tracer-for-ts buildTypeTracerForTS array.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS array.ts import { target } from "./target.ts";
 
 const a = [1, 2, 3, 4, 5];
 
@@ -64,7 +64,7 @@ Array [
 ]
 `;
 
-exports[`type-tracer-for-ts buildTypeTracerForTS bigint.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS bigint.ts import { target } from "./target.ts";
 
 const a = 1n;
 
@@ -100,7 +100,7 @@ Array [
 ]
 `;
 
-exports[`type-tracer-for-ts buildTypeTracerForTS boolean.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS boolean.ts import { target } from "./target.ts";
 
 const a = true;
 
@@ -136,7 +136,7 @@ Array [
 ]
 `;
 
-exports[`type-tracer-for-ts buildTypeTracerForTS function.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS function.ts import { target } from "./target.ts";
 
 target(fn, String);
 
@@ -343,7 +343,7 @@ Array [
 ]
 `;
 
-exports[`type-tracer-for-ts buildTypeTracerForTS intl.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS intl.ts import { target } from "./target.ts";
 
 target(new Intl.Segmenter());
 
@@ -374,7 +374,7 @@ Array [
 ]
 `;
 
-exports[`type-tracer-for-ts buildTypeTracerForTS object.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS object.ts import { target } from "./target.ts";
 
 const a = {};
 
@@ -390,7 +390,7 @@ Array [
 ]
 `;
 
-exports[`type-tracer-for-ts buildTypeTracerForTS string.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS string.ts import { target } from "./target.ts";
 
 const a = "Hello, World!";
 
@@ -442,7 +442,7 @@ Array [
 ]
 `;
 
-exports[`type-tracer-for-ts buildTypeTracerForTS symbol.ts import { target } from "./target";
+exports[`type-tracer-for-ts buildTypeTracerForTS symbol.ts import { target } from "./target.ts";
 
 const a = Symbol.iterator;
 
