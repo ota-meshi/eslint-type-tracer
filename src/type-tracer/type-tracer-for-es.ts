@@ -95,9 +95,9 @@ function buildExpressionTypeProviderImpl(
     CallExpression: getCallExpressionTypeInfo,
     NewExpression: getCallExpressionTypeInfo,
     TaggedTemplateExpression: getCallExpressionTypeInfo,
-    ConditionalExpression(
+    ConditionalExpression: (
       node: TSESTree.ConditionalExpression,
-    ): TypeInfo | null {
+    ): TypeInfo | null => {
       const consequent = getTypeInfo(node.consequent);
       const alternate = getTypeInfo(node.alternate);
       return {
